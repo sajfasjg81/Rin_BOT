@@ -124,6 +124,20 @@ const run = async (ms, msg, type, opdata) => {
         }
         return backdata;
     }
+    if(ms.name == "结婚"){
+        if (opdata?.exp[1] != null) {
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&type=80`,
+            });
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `/${opdata.exp[0]} 目标QQ号 `,
+            });
+        }
+        return backdata;
+    }
     if(ms.name == "悲报"){
         if (opdata?.exp[1] != null) {
             backdata.push({
@@ -167,6 +181,19 @@ const run = async (ms, msg, type, opdata) => {
             "美少女":6,
             "异次元绳":1,
             "垃圾桶":43,
+            "举枪":48,
+            "锤子":49,
+            "prpr":53,
+            "胡桃":54,
+            "急急国王":58,
+            "亲亲":59,
+            "凯露":61,
+            "卡比":64,
+            "可莉":65,
+            "鲨鲨敲打":66,
+            "loading":71,
+            "看扁":72,
+            "永远爱你":74,
         };
         let txl = {
             "狂粉" : 38,
@@ -174,9 +201,10 @@ const run = async (ms, msg, type, opdata) => {
             "不知道" : 10,
             "永远喜欢":5,
             "跟一样":4,
-            "原神启动":44,
+            "启动":44,
+            "鲁迅":76,
         };
-        let rdl = [41,39,37,34,33,32,31,30,29,28,27,25,23,21,20,19,18,17,16,15,14,11,8,7,6,3,2,1,43];
+        let rdl = [41,39,37,34,33,32,31,30,29,28,27,25,23,21,20,19,18,17,16,15,14,11,8,7,6,3,2,1,43,48,49,50,52,53,54,58,59,60,61,62,63,64,65,66,68,69,71,72,73,74,79];
     }
 
     if (ms.name == "mihoyo") {
