@@ -55,7 +55,14 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        trigger: ["发病文案", "发病文", "发病"],
+        trigger: ["发病文案", "发病文", "发病", "发癫"],
+    },
+    {
+        name: "狗屁不通",
+        class: "yule",
+        plugin: "axios_gl",
+        mstype: "local",
+        trigger: ["狗屁不通", "狗屁文", "发病"],
     },
 ];
 
@@ -63,6 +70,32 @@ const run = async (ms, msg, type, opdata) => {
     backdata = [];
 
     try {
+
+        if (ms.name == "狗屁不通") {
+            if (opdata?.exp?.[1] != null) {
+                await axios.get("https://api.lolimi.cn/API/dog/api.php?num=300&type=text&msg=" + opdata.exp[1])
+                    .then(response => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `${response.data}`,
+                        });
+                    })
+                    .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
+                        console.error(error);
+                    });
+            } else {
+                backdata.push({
+                    bot_type: "text",
+                    text: `${opdata.exp[0]} 目标名称`,
+                });
+            }
+
+            return backdata;
+        }
 
         if (ms.name == "发病文案") {
             if (opdata?.exp?.[1] != null) {
