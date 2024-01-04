@@ -56,6 +56,14 @@ const cfg = [
         trigger: ["mihoyo"],
         off: false,
     },
+    {
+        name: "rua",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["rua"],
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -80,6 +88,21 @@ const run = async (ms, msg, type, opdata) => {
             backdata.push({
                 bot_type: "text",
                 text: `/mihoyo 目标QQ号 `,
+            });
+        }
+        return backdata;
+    }
+    if (ms.name == "rua") {
+        if (opdata?.exp[1] != null) {
+
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/face_petpet/?QQ=${opdata.exp[1]}`,
+            });
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `/${opdata.exp[0]} 目标QQ号`,
             });
         }
         return backdata;
