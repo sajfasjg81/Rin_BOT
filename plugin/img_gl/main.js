@@ -126,10 +126,11 @@ const run = async (ms, msg, type, opdata) => {
         return backdata;
     }
     if (ms.name == "启动") {
-        if (opdata?.exp[1] != null) {
+        if (opdata?.exp[1] != null && opdata?.exp[2] != null) {
+            opdata.exp[1] = parseInt(opdata.exp[1]); 
             backdata.push({
                 bot_type: "imgurl",
-                text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&type=32`,
+                text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&msg=${opdata.exp[2]}&type=44`,
             });
         } else {
             backdata.push({
