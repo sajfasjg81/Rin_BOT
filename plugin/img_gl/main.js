@@ -64,6 +64,22 @@ const cfg = [
         trigger: ["rua"],
         off: false,
     },
+    {
+        name: "结婚",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["结婚","jiehun"],
+        off: false,
+    },
+    {
+        name: "离婚",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["离婚","lihun"],
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -77,6 +93,39 @@ const run = async (ms, msg, type, opdata) => {
         });
         return backdata;
     }
+
+    if(ms.name == "离婚"){
+        if (opdata?.exp[1] != null) {
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&type=32`,
+            });
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `/${opdata.exp[0]} 目标QQ号 `,
+            });
+        }
+        return backdata;
+    }
+    if(ms.name == "聚合表情包"){
+        let imgl = {
+            "关注":41,
+            "不幸":34,
+            "追火车":25,
+            "撕画":20,
+            "画画":19,
+            "奶茶":17,
+            "波奇":16,
+            "吃掉":14
+        };
+        let txl = {
+            "狂粉" : 38,
+            "寄" : 22,
+        };
+        let rdl = [41,39,37,34,33,32,31,30,29,28,27,25,23,21,20,19,18,17,16,15,14];
+    }
+
     if (ms.name == "mihoyo") {
         if (opdata?.exp[1] != null) {
             opdata.authorid = opdata?.exp[1];
