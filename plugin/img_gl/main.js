@@ -112,12 +112,58 @@ const cfg = [
         trigger: ["启动", "qidong"],
         off: false,
     },
+    {
+        name: "呃呃",
+        class: "za",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["呃呃"],
+        off: false,
+    },
+    {
+        name: "点赞",
+        class: "za",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["点赞"],
+        off: false,
+    },
+    {
+        name: "元气骑士时间表",
+        class: "za",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["元气骑士时间表", "元气时间表"],
+        off: false,
+    },
+    {
+        name: "元气骑士词缀表",
+        class: "za",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["元气骑士词缀", "元气词缀表"],
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
     backdata = [];
     let ckms = "";
     let ckmsarr = {};
+    if (ms.name == "呃呃") {
+        backdata.push({
+            bot_type: "imgurl",
+            text: `https://sv2api.ww2.ren/e.jpg`,
+        });
+        return backdata;
+    }
+    if (ms.name == "点赞") {
+        backdata.push({
+            bot_type: "imgurl",
+            text: `https://sv2api.ww2.ren/gj.jpg`,
+        });
+        return backdata;
+    }
     if (ms.name == "60秒看世界") {
         backdata.push({
             bot_type: "imgurl",
@@ -358,6 +404,16 @@ const run = async (ms, msg, type, opdata) => {
     if (ms.name == "pcr千里眼") {
         ckms = "gl";
         ckmsarr.imgid = `&id[]=6596a9797e4bee785e72ff56&id[]=6596a9797e4bee785e72ff57&id[]=6596a9797e4bee785e72ff58`;
+    }
+
+    if (ms.name == "元气骑士时间表") {
+        ckms = "gl";
+        ckmsarr.imgid = `&id=656dc67ae2f42045c6199ca4`;
+    }
+
+    if (ms.name == "元气骑士词缀表") {
+        ckms = "gl";
+        ckmsarr.imgid = `&id=656dc67ae2f42045c6199ca5`;
     }
 
     if (ms.name == "随机柴郡") {
