@@ -80,6 +80,22 @@ const cfg = [
         trigger: ["离婚","lihun"],
         off: false,
     },
+    {
+        name: "悲报",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["悲报","beibao"],
+        off: false,
+    },
+    {
+        name: "喜报",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["喜报","xibao"],
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -108,6 +124,34 @@ const run = async (ms, msg, type, opdata) => {
         }
         return backdata;
     }
+    if(ms.name == "悲报"){
+        if (opdata?.exp[1] != null) {
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/preview/api.php?msg=${opdata.exp[1]}&type=12`,
+            });
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `/${opdata.exp[0]} 文本`,
+            });
+        }
+        return backdata;
+    }
+    if(ms.name == "喜报"){
+        if (opdata?.exp[1] != null) {
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/preview/api.php?msg=${opdata.exp[1]}&type=45`,
+            });
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `/${opdata.exp[0]} 文本`,
+            });
+        }
+        return backdata;
+    }
     if(ms.name == "聚合表情包"){
         let imgl = {
             "关注":41,
@@ -117,13 +161,22 @@ const run = async (ms, msg, type, opdata) => {
             "画画":19,
             "奶茶":17,
             "波奇":16,
-            "吃掉":14
+            "吃掉":14,
+            "工地":11,
+            "阿尼亚":7,
+            "美少女":6,
+            "异次元绳":1,
+            "垃圾桶":43,
         };
         let txl = {
             "狂粉" : 38,
             "寄" : 22,
+            "不知道" : 10,
+            "永远喜欢":5,
+            "跟一样":4,
+            "原神启动":44,
         };
-        let rdl = [41,39,37,34,33,32,31,30,29,28,27,25,23,21,20,19,18,17,16,15,14];
+        let rdl = [41,39,37,34,33,32,31,30,29,28,27,25,23,21,20,19,18,17,16,15,14,11,8,7,6,3,2,1,43];
     }
 
     if (ms.name == "mihoyo") {
