@@ -104,6 +104,14 @@ const cfg = [
         trigger: ["表情包制作", "bqbzz", "聚合表情"],
         off: false,
     },
+    {
+        name: "启动",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["启动", "qidong"],
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -117,7 +125,20 @@ const run = async (ms, msg, type, opdata) => {
         });
         return backdata;
     }
-
+    if (ms.name == "启动") {
+        if (opdata?.exp[1] != null) {
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&type=32`,
+            });
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `/${opdata.exp[0]} 目标QQ号 启动文本`,
+            });
+        }
+        return backdata;
+    }
     if (ms.name == "离婚") {
         if (opdata?.exp[1] != null) {
             backdata.push({
@@ -252,6 +273,22 @@ const run = async (ms, msg, type, opdata) => {
                 });
                 return backdata;
             }
+        }
+
+        if (opdata?.exp[1] != null) {
+            let randomIndex = Math.floor(Math.random() * rdl.length);
+            let randomNumber = rdl[randomIndex];
+            backdata.push({
+                bot_type: "imgurl",
+                text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&type=${randomNumber}`,
+            });
+            return backdata;
+        } else {
+            backdata.push({
+                bot_type: "text",
+                text: `请使用指令 ${opdata.exp[0]} QQ号`,
+            });
+            return backdata;
         }
 
     }
