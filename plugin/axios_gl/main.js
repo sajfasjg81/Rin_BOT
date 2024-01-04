@@ -48,7 +48,14 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        trigger: ["成分组成", "cf","成分"],
+        trigger: ["成分组成", "cf", "成分"],
+    },
+    {
+        name: "发病文案",
+        class: "yule",
+        plugin: "axios_gl",
+        mstype: "local",
+        trigger: ["发病文案", "发病文", "发病"],
     },
 ];
 
@@ -56,6 +63,39 @@ const run = async (ms, msg, type, opdata) => {
     backdata = [];
 
     try {
+
+        if (ms.name == "发病文案") {
+            if (opdata?.exp?.[1] != null) {
+                await axios.get("https://api.lolimi.cn/API/fabing/fb.php?name=" + opdata?.exp[1])
+                    .then(response => {
+                        if (response.data.data == "各个视频的评论区偷的，别被屏蔽qwq") {
+                            backdata.push({
+                                bot_type: "text",
+                                text: `指令失败请重试。`,
+                            });
+                        } else {
+                            backdata.push({
+                                bot_type: "text",
+                                text: `${response.data.data}`,
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
+                        console.error(error);
+                    });
+            } else {
+                backdata.push({
+                    bot_type: "text",
+                    text: `${opdata.exp[0]} 要发癫的名称`,
+                });
+            }
+
+            return backdata;
+        }
 
         if (ms.name == "成分组成") {
 
@@ -69,6 +109,10 @@ const run = async (ms, msg, type, opdata) => {
                         });
                     })
                     .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
                         console.error(error);
                     });
             } else {
@@ -92,6 +136,10 @@ const run = async (ms, msg, type, opdata) => {
                         });
                     })
                     .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
                         console.error(error);
                     });
             } else {
@@ -138,7 +186,11 @@ const run = async (ms, msg, type, opdata) => {
             return backdata;
         }
     } catch (err) {
-        console.log('error',err);
+        backdata.push({
+            bot_type: "text",
+            text: `[远程API失败]${error}`,
+        });
+        console.error(error);
     }
 }
 
