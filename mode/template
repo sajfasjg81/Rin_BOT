@@ -1,0 +1,11 @@
+const sys = require('../sysfunction');
+
+const run = async (ms, msg, type, opdata) => {
+
+    let backdata = [];
+    
+  
+    return backdata;
+};
+
+module.exports = { run};

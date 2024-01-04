@@ -1,0 +1,16 @@
+{
+  "name": "qun_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "mongoose": "^7.6.4",
+    "ws": "^8.14.2"
+  }
+}
