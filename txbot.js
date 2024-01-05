@@ -227,6 +227,7 @@ event.on('txbot_connect', async function (appid) {
                     data.appid = appid;
                     data.groupid = data.d.group_openid;
                     data.attach = data.attachments;
+                    data.atlist = [];
                     //开启数据库时有效  向数据库写入次数
                     if (cfg.db_mode == true) {
                         await db.upd('gf_bot_info', {
@@ -272,6 +273,7 @@ event.on('txbot_connect', async function (appid) {
                     data.appid = appid;
                     data.groupid = data.d.group_openid;
                     data.attach = data.attachments;
+                    data.atlist = [];
                     //开启数据库时有效  向数据库写入次数
                     if (cfg.db_mode == true) {
                         await db.upd('gf_bot_info', {
@@ -324,7 +326,7 @@ event.on('txbot_connect', async function (appid) {
                     data.appid = appid;
                     data.groupid = data.d.group_openid;
                     data.attach = data.attachments;
-
+                    data.atlist = [];
                     event.emit('receive_messages', {
                         type: 'qqgroup',
                         exp: exp,
