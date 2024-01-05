@@ -1,5 +1,5 @@
 const axios = require('axios');
-const sys = require(dir+'/sysfunction');
+const sys = require(dir + '/sysfunction');
 
 const cfg = [
     {
@@ -16,6 +16,13 @@ const cfg = [
         mstype: "local",
         trigger: ["模式切换", "msqh", "切换模式"],
     },
+    {
+        name: "重载指令",
+        class: "hide",
+        plugin: "text_gl",
+        mstype: "local",
+        trigger: ["重载指令", "reload", "rems"],
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -28,6 +35,17 @@ const run = async (ms, msg, type, opdata) => {
             bot_type: "text",
             text: `【花舞组文档】https://sv2api.ww2.ren/pcrwiki`,
         });
+        return backdata;
+    }
+
+    if (ms.name == "重载指令") {
+        let backdata = [];
+        await sys.get_botcmd();
+        backdata.push({
+            bot_type: "text",
+            text: `\n重载指令成功`,
+        });
+
         return backdata;
     }
 
