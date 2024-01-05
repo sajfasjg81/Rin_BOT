@@ -41,7 +41,9 @@ botlist : [
 
 打开`config/net.mamoe.mirai-api-http/setting.yml`
 
-启动Mirai HTTP 正向WS服务器
+把http的jar放到mirai的plugin目录
+
+运行Mirai程序
 
 ```
 adapters: 

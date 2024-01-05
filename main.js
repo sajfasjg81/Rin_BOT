@@ -90,8 +90,8 @@ const ck_cfg = async () => {
 //运行数据库
 const rundb = async () => {
     return new Promise((resolve, reject) => {
-        if (cfg.db_mode == true) {
-            sys.cmdlog("info", "载入数据库中");
+        if (cfg.mao_mode == true) {
+            sys.cmdlog("info", "猫燐官方模式");
             mongoose.connect(`mongodb://${cfg.host}:${cfg.pw}@localhost/${cfg.base}`, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
@@ -105,7 +105,7 @@ const rundb = async () => {
                     process.exit();
                 });
         } else {
-            sys.cmdlog("info", "无数据库模式");
+            sys.cmdlog("info", "自搭模式");
             resolve(true);
         }
     });

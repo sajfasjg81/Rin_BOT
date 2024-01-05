@@ -164,8 +164,8 @@ event.on('reconnect_mirai', async function (data) {
 
             
 
-                //开启数据库时有效  向数据库写入次数
-                if (cfg.db_mode == true) {
+                //猫燐专用
+                if (cfg.mao_mode == true) {
                     await db.upd('gf_bot_info', {
                         user: cfg.user
                     }, {

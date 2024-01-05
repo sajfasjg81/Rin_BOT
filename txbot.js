@@ -136,8 +136,8 @@ event.on('txbot_connect', async function (appid) {
                     gfbot[appid].user = data.d.user.id; //botid
                     event.emit(`txbot_connect_${appid}_end`, appid); //登录back
 
-                    //开启数据库时有效  向数据库注册bot信息
-                    if (cfg.db_mode == true) {
+                    //猫燐专用  向数据库注册bot信息
+                    if (cfg.mao_mode == true) {
                         let botinfo = await db.find("gf_bot_info", {
                             user: "11510438378917080826",
                         });
@@ -175,7 +175,8 @@ event.on('txbot_connect', async function (appid) {
                     };
                     sendmsgzhu(datas, postDatas);
 
-                    if (cfg.db_mode == true) {
+                    //猫燐专用
+                    if (cfg.mao_mode == true) {
 
                         let send_msg = {
                             type: "addbot",
@@ -192,8 +193,8 @@ event.on('txbot_connect', async function (appid) {
                 }
                 //Q群消息 被T出群
                 if (data.t == "GROUP_DEL_ROBOT") {
-                    //开启数据库时有效  猫燐官方BOT使用 其他人别开启
-                    if (cfg.db_mode == true) {
+                    //猫燐专用
+                    if (cfg.mao_mode == true) {
 
                         let send_msg = {
                             type: "kickbot",
@@ -228,8 +229,8 @@ event.on('txbot_connect', async function (appid) {
                     data.groupid = data.d.group_openid;
                     data.attach = data.attachments;
                     data.atlist = [];
-                    //开启数据库时有效  向数据库写入次数
-                    if (cfg.db_mode == true) {
+                    //猫燐专用
+                    if (cfg.mao_mode == true) {
                         await db.upd('gf_bot_info', {
                             user: gfbot[appid].user
                         }, {
@@ -274,8 +275,8 @@ event.on('txbot_connect', async function (appid) {
                     data.groupid = data.d.group_openid;
                     data.attach = data.attachments;
                     data.atlist = [];
-                    //开启数据库时有效  向数据库写入次数
-                    if (cfg.db_mode == true) {
+                    //猫燐专用
+                    if (cfg.mao_mode == true) {
                         await db.upd('gf_bot_info', {
                             user: gfbot[appid].user
                         }, {
@@ -333,8 +334,8 @@ event.on('txbot_connect', async function (appid) {
                         data: data,
                     });
 
-                    //开启数据库时有效  向数据库写入次数
-                    if (cfg.db_mode == true) {
+                    //猫燐专用
+                    if (cfg.mao_mode == true) {
                         await db.upd('gf_bot_info', {
                             user: gfbot[appid].user
                         }, {
