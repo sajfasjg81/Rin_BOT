@@ -180,7 +180,7 @@ const run = async (ms, msg, type, opdata) => {
         if(msg[0] == "卡马逊列表"){
             backdata.push({
                 bot_type: "text",
-                text: `[卡马逊指令列表]\n卡马逊食神\n卡马逊死灵\n卡马逊黑帮\n卡马逊植物\n卡马逊西部\n卡马逊其他1\n卡马逊其他2`,
+                text: `[卡马逊指令列表]\n卡马逊食神\n卡马逊死灵\n卡马逊黑帮\n卡马逊植物\n卡马逊西部\n卡马逊其他1\n卡马逊其他2\n\n※缺失或错误联系猫燐修复，请带一图流。`,
             });
             return backdata;
         }
