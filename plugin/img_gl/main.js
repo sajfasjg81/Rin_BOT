@@ -137,11 +137,11 @@ const cfg = [
         off: false,
     },
     {
-        name: "元气骑士词缀表",
-        class: "za",
+        name: "合作远征秘籍",
+        class: "wt",
         plugin: "img_gl",
         mstype: "local",
-        trigger: ["元气骑士词缀", "元气词缀表"],
+        trigger: ["合作远征", "hzyz"],
         off: false,
     },
 ];
@@ -173,7 +173,7 @@ const run = async (ms, msg, type, opdata) => {
     }
     if (ms.name == "启动") {
         if (opdata?.exp[1] != null && opdata?.exp[2] != null) {
-            opdata.exp[1] = parseInt(opdata.exp[1]); 
+            opdata.exp[1] = parseInt(opdata.exp[1]);
             backdata.push({
                 bot_type: "imgurl",
                 text: `https://api.lolimi.cn/API/preview/api.php?qq=${opdata.exp[1]}&msg=${opdata.exp[2]}&type=44`,
@@ -244,7 +244,6 @@ const run = async (ms, msg, type, opdata) => {
     }
     if (ms.name == "聚合表情包") {
         let imgl = {
-            "关注": 41,
             "不幸": 34,
             "追火车": 25,
             "撕画": 20,
@@ -416,6 +415,13 @@ const run = async (ms, msg, type, opdata) => {
         ckmsarr.imgid = `&id=656dc67ae2f42045c6199ca5`;
     }
 
+    if (ms.name == "合作远征秘籍") {
+        await axios.get('https://sv2api.ww2.ren/?t=get/gfbot/glms&name=合作远征秘籍')
+            .then(response => {
+               
+            });
+    }
+
     if (ms.name == "随机柴郡") {
         backdata.push({
             bot_type: "imgurl",
@@ -434,7 +440,6 @@ const run = async (ms, msg, type, opdata) => {
 
 
     if (ckms == "gl") {
-        console.log('https://sv2api.ww2.ren/?t=get/gfbot/gl' + ckmsarr.imgid);
         await axios.get('https://sv2api.ww2.ren/?t=get/gfbot/gl' + ckmsarr.imgid)
             .then(response => {
                 if (response?.data?.data != null) {
