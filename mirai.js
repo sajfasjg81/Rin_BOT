@@ -12,29 +12,6 @@ const send_msg_back = async (cmdback, data=[], seq = 1) => {
     try {
         cmdback.forEach((v, k) => {
 
-
-            //要求再curl一遍的指令
-            if (v.bot_type == "curl_get") {
-                /*
-                axios.get(v.src)
-                    .then(response => {
-                        send_msg_back(response.data.data, data, (seq+1) );
-                    })
-                    .catch(error => {
-                        sys.cmdlog("error",error.msg + error.stack);
-                        sendmsg =  "\n[发生故障]\n"+ error.msg + error.stack + "\n频繁显示请发送给猫燐修复。";
-                        const postData = {
-                            content: sendmsg,
-                            msg_seq : seq,
-                            msg_type: 0,
-                            msg_id: data.d.id,
-                            timestamp: Date.now(),
-                        };
-                        sendmsgat(data.d, postData);
-                    });
-                 */
-            }
-
             if (v.bot_type == "text") {
                 sendmsg.push({
                     "type": "Plain",
@@ -141,14 +118,14 @@ event.on('reconnect_mirai', async function (data) {
                     atlist: [],
                     msg: "",
                     msgtype : data.data.type,
-                    img: null,
+                    attach: [],
                     groupid: sender.group.id,
                     name: sender.group.name,
                     groupusername: sender.memberName,
                     grouplevel: sender.group.permission,
                     timestamp: sender.joinTimestamp,
                 };
-                console.log(data?.data?.messageChain);
+                //console.log(data?.data?.messageChain);
                 data?.data?.messageChain.forEach((v2, k2) => {
                     if (v2.type == "Source") {
                         //消息ID 不需要
@@ -163,10 +140,14 @@ event.on('reconnect_mirai', async function (data) {
                     }
                     if (v2.type == "Image") {
                         //图片
-                        send.img = v2.url;
+                        send.attach.push({
+                            filename : v2.imageId,
+                            content_type : v2.imageType,
+                            url : v2.url,
+                        });
                     }
                 });
-
+                //console.log(send);
                 if(send.atlist.length >=1){
                     return;
                 }
@@ -177,6 +158,8 @@ event.on('reconnect_mirai', async function (data) {
                 if (send.msg == null) {
                     return;
                 }
+
+            
 
                 //开启数据库时有效  向数据库写入次数
                 if (cfg.db_mode == true) {
