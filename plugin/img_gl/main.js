@@ -156,12 +156,65 @@ const cfg = [
         trigger: ["合作远征", "hzyz"],
         off: false,
     },
+    {
+        name: "卡马逊",
+        class: "wt",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["卡马逊","kmx","卡马逊列表","卡马逊额外","卡马逊食神","卡马逊其他1","卡马逊黑帮","卡马逊植物","卡马逊死灵","卡马逊其他2"],
+        tips: "卡马逊 当期最新、卡马逊列表查看所有赛季。",
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
     backdata = [];
     let ckms = "";
     let ckmsarr = {};
+
+    if(ms.name == "卡马逊"){
+        if(msg[0] == "卡马逊"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c03340624`;
+        }
+        if(msg[0] == "卡马逊列表"){
+            backdata.push({
+                bot_type: "text",
+                text: `[卡马逊指令列表]\n卡马逊食神\n卡马逊死灵\n卡马逊黑帮\n卡马逊植物\n卡马逊西部\n卡马逊其他1\n卡马逊其他2`,
+            });
+            return backdata;
+        }
+        if(msg[0] == "卡马逊食神" || msg[0] == "卡马逊厨神"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c03340648`;
+        }
+        if(msg[0] == "卡马逊亡灵" || msg[0] == "卡马逊死灵"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c03340647`;
+        }
+        if(msg[0] == "卡马逊黑帮"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c0334064d`;
+        }
+        if(msg[0] == "卡马逊植物"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c0334064e`;
+        }
+        if(msg[0] == "卡马逊西部"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c0334064f`;
+        }
+        if(msg[0] == "卡马逊其他1"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c03340643`;
+        }
+        if(msg[0] == "卡马逊其他2"){
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c03340652`;
+        }
+  
+    }
+
     if (ms.name == "呃呃") {
         backdata.push({
             bot_type: "imgurl",

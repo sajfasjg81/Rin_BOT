@@ -17,12 +17,19 @@ const cfg = [
         trigger: ["娱乐", "娱乐指令"],
     },
     {
+        name: "攻略指令",
+        class: "ms",
+        plugin: "help",
+        mstype: "local",
+        trigger: ["攻略", "攻略指令"],
+    },
+    {
         name: "切换指令",
         class: "ms",
         plugin: "help",
         mstype: "local",
         tips: "切换指令表展示方式",
-        trigger: ["切换指令"],
+        trigger: ["切换指令","指令切换"],
     },
 ];
 
@@ -71,7 +78,10 @@ const run = async (ms, msg, type, opdata) => {
         ckms = "zlb";
         ckmsarr.class = "yule";
     }
-
+    if (ms.name == "攻略指令") {
+        ckms = "zlb";
+        ckmsarr.class = "wt";
+    }
     if (ckms == "zlb") {
         if (type == "mirai") {
             opdata.appid = opdata.bot;
@@ -125,6 +135,7 @@ const run = async (ms, msg, type, opdata) => {
                 bot_type: "text",
                 text: ckmsarr.list,
             });
+            ckmsarr.list = `\n图片指令表请使用指令【指令切换】`;
         }
 
         return backdata;
