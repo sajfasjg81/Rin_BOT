@@ -149,7 +149,10 @@ event.on('reconnect_mirai', async function (data) {
                 });
                 //console.log(send);
                 if(send.atlist.length >=1){
-                    return;
+                    if(send.atlist[0] == 3889000841){
+                        return;
+                        //如果@的是猫燐助手 忽略
+                    }
                 }
 
                 if (send.msg.length <= 1) {

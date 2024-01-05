@@ -69,7 +69,7 @@ const cfg = [
         plugin: "axios_gl",
         mstype: "local",
         tips:"狗屁文 目标对象、随机生成一段文字",
-        trigger: ["狗屁不通", "狗屁文", "发病"],
+        trigger: ["狗屁不通", "狗屁文"],
     },
 ];
 
@@ -130,7 +130,7 @@ const run = async (ms, msg, type, opdata) => {
             } else {
                 backdata.push({
                     bot_type: "text",
-                    text: `${opdata.exp[0]} 要发癫的名称`,
+                    text: `请使用指令：${opdata.exp[0]} 要发癫的名称`,
                 });
             }
 

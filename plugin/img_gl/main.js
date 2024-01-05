@@ -6,7 +6,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["pcr千里眼", "pcrqly", "pcr未来视"],
-        tips:"公主连结角色千里眼",
+        tips: "公主连结角色千里眼",
         off: false,
     },
     {
@@ -15,7 +15,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["60秒看世界", "看世界"],
-        tips:"获取今天的新闻",
+        tips: "获取今天的新闻",
         off: false,
     },
     {
@@ -40,7 +40,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["丢", "diu"],
-        tips:"diu 目标Q号",
+        tips: "diu 目标Q号",
         off: false,
     },
     {
@@ -49,7 +49,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["爬", "pa"],
-        tips:"pa 目标Q号",
+        tips: "pa 目标Q号",
         off: false,
     },
     {
@@ -58,7 +58,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["mihoyo"],
-        tips:"mihoyo 目标Q号",
+        tips: "mihoyo 目标Q号",
         off: false,
     },
     {
@@ -67,7 +67,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["rua"],
-        tips:"rua 目标Q号、摸头",
+        tips: "rua 目标Q号、摸头",
         off: false,
     },
     {
@@ -76,7 +76,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["结婚", "jiehun"],
-        tips:"结婚 目标Q号、生成结婚登记申请图片",
+        tips: "结婚 目标Q号、生成结婚登记申请图片",
         off: false,
     },
     {
@@ -85,7 +85,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["离婚", "lihun"],
-        tips:"离婚 目标Q号、生成离婚协议图片",
+        tips: "离婚 目标Q号、生成离婚协议图片",
         off: false,
     },
     {
@@ -94,7 +94,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["悲报", "beibao"],
-        tips:"悲报 内容、生成悲报图片",
+        tips: "悲报 内容、生成悲报图片",
         off: false,
     },
     {
@@ -103,7 +103,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["喜报", "xibao"],
-        tips:"喜报 内容 、生成喜报图片",
+        tips: "喜报 内容 、生成喜报图片",
         off: false,
     },
     {
@@ -112,7 +112,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["表情包制作", "bqbzz", "聚合表情"],
-        tips:"[参数]列表/指定 根据Q号随机制作表情包",
+        tips: "[参数]列表/指定 根据Q号随机制作表情包",
         off: false,
     },
     {
@@ -122,7 +122,7 @@ const cfg = [
         mstype: "local",
         trigger: ["启动", "qidong"],
         off: false,
-        tips:"启动 Q号 文本",
+        tips: "启动 Q号 文本",
     },
     {
         name: "呃呃",
@@ -184,6 +184,13 @@ const run = async (ms, msg, type, opdata) => {
         return backdata;
     }
     if (ms.name == "启动") {
+
+
+        if (opdata?.atlist?.[0] != null) {
+            opdata.exp[1] = opdata?.atlist?.[0];
+            
+        }
+
         if (opdata?.exp[1] != null && opdata?.exp[2] != null) {
             opdata.exp[1] = parseInt(opdata.exp[1]);
             backdata.push({
@@ -255,6 +262,11 @@ const run = async (ms, msg, type, opdata) => {
         return backdata;
     }
     if (ms.name == "聚合表情包") {
+
+
+        //console.log(opdata);
+
+
         let imgl = {
             "不幸": 34,
             "追火车": 25,
@@ -311,6 +323,11 @@ const run = async (ms, msg, type, opdata) => {
         }
 
         if (opdata?.exp[1] == "指定") {
+
+            if (opdata?.atlist?.[0] != null) {
+                opdata.exp[3] = opdata?.atlist?.[0];
+            }
+
             if (imgl?.[opdata?.exp?.[2]] != null) {
                 if (opdata?.exp?.[3] == null) {
                     backdata.push({
@@ -333,6 +350,10 @@ const run = async (ms, msg, type, opdata) => {
             }
         }
 
+        if (opdata?.atlist?.[0] != null) {
+            opdata.exp[1] = opdata?.atlist?.[0];
+        }
+
         if (opdata?.exp[1] != null) {
             let randomIndex = Math.floor(Math.random() * rdl.length);
             let randomNumber = rdl[randomIndex];
@@ -352,6 +373,11 @@ const run = async (ms, msg, type, opdata) => {
     }
 
     if (ms.name == "mihoyo") {
+
+        if (opdata?.atlist?.[0] != null) {
+            opdata.exp[1] = opdata?.atlist?.[0];
+        }
+
         if (opdata?.exp[1] != null) {
             opdata.authorid = opdata?.exp[1];
             backdata.push({
@@ -367,6 +393,11 @@ const run = async (ms, msg, type, opdata) => {
         return backdata;
     }
     if (ms.name == "rua") {
+
+        if (opdata?.atlist?.[0] != null) {
+            opdata.exp[1] = opdata?.atlist?.[0];
+        }
+
         if (opdata?.exp[1] != null) {
 
             backdata.push({
@@ -382,6 +413,11 @@ const run = async (ms, msg, type, opdata) => {
         return backdata;
     }
     if (ms.name == "丢") {
+
+        if (opdata?.atlist?.[0] != null) {
+            opdata.exp[1] = opdata?.atlist?.[0];
+        }
+
         if (opdata?.exp[1] != null) {
 
             backdata.push({
@@ -397,6 +433,11 @@ const run = async (ms, msg, type, opdata) => {
         return backdata;
     }
     if (ms.name == "爬") {
+
+        if (opdata?.atlist?.[0] != null) {
+            opdata.exp[1] = opdata?.atlist?.[0];
+        }
+
         if (opdata?.exp[1] != null) {
 
             backdata.push({
@@ -430,7 +471,7 @@ const run = async (ms, msg, type, opdata) => {
     if (ms.name == "合作远征秘籍") {
         await axios.get('https://sv2api.ww2.ren/?t=get/gfbot/glms&name=合作远征秘籍')
             .then(response => {
-               
+
             });
     }
 
