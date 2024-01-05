@@ -6,7 +6,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"随机生成疯狂星期四",
+        tips: "随机生成疯狂星期四",
         trigger: ["疯狂星期四", "vivo50"],
         api: {
             url: "https://api.yujn.cn/api/kfc.php?type=json",
@@ -19,7 +19,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"生成随机一句二次元话",
+        tips: "生成随机一句二次元话",
         trigger: ["随机一言", "rdyy"],
         api: {
             url: "https://api.lolimi.cn/API/dmyiyan/api.php",
@@ -32,7 +32,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"随机获取一张卡牌",
+        tips: "随机获取一张卡牌",
         trigger: ["塔罗牌", "tlp", "塔罗"],
         api: {
             url: "https://oiapi.net/API/Tarot",
@@ -44,7 +44,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"ecy 生成名称、随机生成二次元形象",
+        tips: "ecy 生成名称、随机生成二次元形象",
         trigger: ["二次元形象", "ecy", "二次元"],
     },
     {
@@ -52,7 +52,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"cf 生成名称、随机生成成分",
+        tips: "cf 生成名称、随机生成成分",
         trigger: ["成分组成", "cf", "成分"],
     },
     {
@@ -60,7 +60,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"发病文 发癫对象、随机生成一段发癫文",
+        tips: "发病文 发癫对象、随机生成一段发癫文",
         trigger: ["发病文案", "发病文", "发病", "发癫"],
     },
     {
@@ -68,8 +68,16 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
-        tips:"狗屁文 目标对象、随机生成一段文字",
+        tips: "狗屁文 目标对象、随机生成一段文字",
         trigger: ["狗屁不通", "狗屁文"],
+    },
+    {
+        name: "今天吃什么",
+        class: "yule",
+        plugin: "axios_gl",
+        mstype: "local",
+        tips: "随机美食",
+        trigger: ["今天吃什么", "jtcsm", "今晚吃什么", "中午吃什么"],
     },
 ];
 
@@ -100,6 +108,28 @@ const run = async (ms, msg, type, opdata) => {
                     text: `${opdata.exp[0]} 目标名称`,
                 });
             }
+
+            return backdata;
+        }
+
+        if (ms.name == "今天吃什么") {
+
+            await axios.get("https://zj.v.api.aa1.cn/api/eats/")
+                .then(response => {
+
+                    backdata.push({
+                        bot_type: "text",
+                        text: `${response.data.meal1} ${response.data.meal2} ${response.data.mealwhat}`,
+                    });
+                })
+                .catch(error => {
+                    backdata.push({
+                        bot_type: "text",
+                        text: `[远程API失败]${error}`,
+                    });
+                    console.error(error);
+                });
+
 
             return backdata;
         }
