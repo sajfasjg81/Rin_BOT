@@ -15,4 +15,5 @@ RinBOT是使用Node.js开发的BOT服务端，支持接入Mirai-HTTP、官方BOT
 ## 其他教程
 
 [通过宝塔面板安装node](./md/bt.md)
+[开发自定义指令插件](./md/plugin.md)
 
