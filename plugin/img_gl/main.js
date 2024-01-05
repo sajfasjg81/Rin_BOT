@@ -6,6 +6,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["pcr千里眼", "pcrqly", "pcr未来视"],
+        tips:"公主连结角色千里眼",
         off: false,
     },
     {
@@ -14,6 +15,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["60秒看世界", "看世界"],
+        tips:"获取今天的新闻",
         off: false,
     },
     {
@@ -38,6 +40,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["丢", "diu"],
+        tips:"diu 目标Q号",
         off: false,
     },
     {
@@ -46,6 +49,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["爬", "pa"],
+        tips:"pa 目标Q号",
         off: false,
     },
     {
@@ -54,6 +58,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["mihoyo"],
+        tips:"mihoyo 目标Q号",
         off: false,
     },
     {
@@ -62,6 +67,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["rua"],
+        tips:"rua 目标Q号、摸头",
         off: false,
     },
     {
@@ -70,6 +76,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["结婚", "jiehun"],
+        tips:"结婚 目标Q号、生成结婚登记申请图片",
         off: false,
     },
     {
@@ -78,6 +85,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["离婚", "lihun"],
+        tips:"离婚 目标Q号、生成离婚协议图片",
         off: false,
     },
     {
@@ -86,6 +94,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["悲报", "beibao"],
+        tips:"悲报 内容、生成悲报图片",
         off: false,
     },
     {
@@ -94,6 +103,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["喜报", "xibao"],
+        tips:"喜报 内容 、生成喜报图片",
         off: false,
     },
     {
@@ -102,6 +112,7 @@ const cfg = [
         plugin: "img_gl",
         mstype: "local",
         trigger: ["表情包制作", "bqbzz", "聚合表情"],
+        tips:"[参数]列表/指定 根据Q号随机制作表情包",
         off: false,
     },
     {
@@ -111,6 +122,7 @@ const cfg = [
         mstype: "local",
         trigger: ["启动", "qidong"],
         off: false,
+        tips:"启动 Q号 文本",
     },
     {
         name: "呃呃",

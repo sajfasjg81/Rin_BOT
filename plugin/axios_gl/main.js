@@ -6,6 +6,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"随机生成疯狂星期四",
         trigger: ["疯狂星期四", "vivo50"],
         api: {
             url: "https://api.yujn.cn/api/kfc.php?type=json",
@@ -18,6 +19,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"生成随机一句二次元话",
         trigger: ["随机一言", "rdyy"],
         api: {
             url: "https://api.lolimi.cn/API/dmyiyan/api.php",
@@ -30,6 +32,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"随机获取一张卡牌",
         trigger: ["塔罗牌", "tlp", "塔罗"],
         api: {
             url: "https://oiapi.net/API/Tarot",
@@ -41,6 +44,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"ecy 生成名称、随机生成二次元形象",
         trigger: ["二次元形象", "ecy", "二次元"],
     },
     {
@@ -48,6 +52,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"cf 生成名称、随机生成成分",
         trigger: ["成分组成", "cf", "成分"],
     },
     {
@@ -55,6 +60,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"发病文 发癫对象、随机生成一段发癫文",
         trigger: ["发病文案", "发病文", "发病", "发癫"],
     },
     {
@@ -62,6 +68,7 @@ const cfg = [
         class: "yule",
         plugin: "axios_gl",
         mstype: "local",
+        tips:"狗屁文 目标对象、随机生成一段文字",
         trigger: ["狗屁不通", "狗屁文", "发病"],
     },
 ];
