@@ -39,11 +39,21 @@ botlist : [
 
 下载mirai-http插件`https://github.com/project-mirai/mirai-api-http`
 
+Mirai签名插件 `https://github.com/cssxsh/fix-protocol-version`
+
+自搭签名win `https://gitee.com/wuliya336/qsign?_from=gitee_search`
+
+自搭签名linux `https://gitee.com/cikeyqi/unidbg-fetch-qsign-shell?_from=gitee_search`
+
 打开`config/net.mamoe.mirai-api-http/setting.yml`
 
 把http的jar放到mirai的plugin目录
 
+然后自搭签名服务器
+
 运行Mirai程序
+
+签名自己解决不谈。
 
 ```
 adapters: 

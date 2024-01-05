@@ -1,4 +1,33 @@
 const axios = require('axios');
+
+
+const challenges = {
+    "合作挑战1": "6596a9797e4bee785e72ff52",
+    "合作挑战2": "6596a9797e4bee785e72ff53",
+    "合作挑战3": "6596a9797e4bee785e72ff54",
+    "合作挑战4": "6596a9797e4bee785e72ff55",
+};
+
+const ckmsMappings = {
+    "卡马逊食神": "6504fc35186c533c03340648",
+    "卡马逊厨神": "6504fc35186c533c03340648",
+    "卡马逊亡灵": "6504fc35186c533c03340647",
+    "卡马逊死灵": "6504fc35186c533c03340647",
+    "卡马逊黑帮": "6504fc35186c533c0334064d",
+    "卡马逊植物": "6504fc35186c533c0334064e",
+    "卡马逊西部": "6504fc35186c533c0334064f",
+    "卡马逊其他1": "6504fc35186c533c03340643",
+    "卡马逊其他2": "6504fc35186c533c03340652"
+};
+
+const keys = Object.keys(ckmsMappings);
+let kmx_mstext = "";
+let kmxpush = [];
+for (let i = 0; i < keys.length; i++) {
+    kmx_mstext += `${keys[i]}\n`
+    kmxpush.push(keys[i]);
+}
+
 const cfg = [
     {
         name: "pcr千里眼",
@@ -149,11 +178,15 @@ const cfg = [
         off: false,
     },
     {
-        name: "合作远征秘籍",
+        name: "合作远征",
         class: "wt",
         plugin: "img_gl",
         mstype: "local",
-        trigger: ["合作远征", "hzyz"],
+        trigger: [
+            "合作远征", "hzyz",
+            "合作挑战1", "合作挑战2", "合作挑战3", "合作挑战4",
+        ],
+        tips: "合作远征攻略、额外指令[合作远征列表]",
         off: false,
     },
     {
@@ -161,8 +194,8 @@ const cfg = [
         class: "wt",
         plugin: "img_gl",
         mstype: "local",
-        trigger: ["卡马逊","kmx","卡马逊列表","卡马逊额外","卡马逊食神","卡马逊其他1","卡马逊黑帮","卡马逊植物","卡马逊死灵","卡马逊其他2"],
-        tips: "卡马逊 当期最新、卡马逊列表查看所有赛季。",
+        trigger: ["卡马逊", "kmx", "卡马逊列表", "卡马逊额外",...kmxpush],
+        tips: "卡马逊一图流、额外指令[卡马逊列表]",
         off: false,
     },
 ];
@@ -172,47 +205,49 @@ const run = async (ms, msg, type, opdata) => {
     let ckms = "";
     let ckmsarr = {};
 
-    if(ms.name == "卡马逊"){
-        if(msg[0] == "卡马逊"){
-            ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c03340624`;
+
+    if (ms.name == "合作远征") {
+
+        const keys = Object.keys(challenges);
+        let mstext = "";
+        for (let i = 0; i < keys.length; i++) {
+            mstext += `${keys[i]}\n`
         }
-        if(msg[0] == "卡马逊列表"){
+
+        if (msg[0] == "合作远征" || msg[0] == "hzyz") {
             backdata.push({
                 bot_type: "text",
-                text: `[卡马逊指令列表]\n卡马逊食神\n卡马逊死灵\n卡马逊黑帮\n卡马逊植物\n卡马逊西部\n卡马逊其他1\n卡马逊其他2\n\n※缺失或错误联系猫燐修复，请带一图流。`,
+                text: `[合作远征指令列表]\n${mstext}`,
             });
             return backdata;
         }
-        if(msg[0] == "卡马逊食神" || msg[0] == "卡马逊厨神"){
+
+
+        if (challenges.hasOwnProperty(msg[0])) {
             ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c03340648`;
+            ckmsarr.imgid = `&id=${challenges[msg[0]]}`;
         }
-        if(msg[0] == "卡马逊亡灵" || msg[0] == "卡马逊死灵"){
+    }
+
+    if (ms.name == "卡马逊") {
+        if (msg[0] == "卡马逊") {
             ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c03340647`;
+            ckmsarr.imgid = `&id=6504fc35186c533c03340624`;
         }
-        if(msg[0] == "卡马逊黑帮"){
+ 
+        if (msg[0] == "卡马逊列表") {
+            backdata.push({
+                bot_type: "text",
+                text: `[卡马逊指令列表]\n\n${kmx_mstext}\n※缺失或错误联系猫燐修复，请带一图流。`,
+            });
+            return backdata;
+        }
+
+        if (ckmsMappings.hasOwnProperty(msg[0])) {
             ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c0334064d`;
+            ckmsarr.imgid = `&id=${ckmsMappings[msg[0]]}`;
         }
-        if(msg[0] == "卡马逊植物"){
-            ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c0334064e`;
-        }
-        if(msg[0] == "卡马逊西部"){
-            ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c0334064f`;
-        }
-        if(msg[0] == "卡马逊其他1"){
-            ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c03340643`;
-        }
-        if(msg[0] == "卡马逊其他2"){
-            ckms = "gl";
-            ckmsarr.imgid = `&id=6504fc35186c533c03340652`;
-        }
-  
+
     }
 
     if (ms.name == "呃呃") {
@@ -241,7 +276,7 @@ const run = async (ms, msg, type, opdata) => {
 
         if (opdata?.atlist?.[0] != null) {
             opdata.exp[1] = opdata?.atlist?.[0];
-            
+
         }
 
         if (opdata?.exp[1] != null && opdata?.exp[2] != null) {
@@ -546,6 +581,7 @@ const run = async (ms, msg, type, opdata) => {
 
 
     if (ckms == "gl") {
+        console.log(34);
         await axios.get('https://sv2api.ww2.ren/?t=get/gfbot/gl' + ckmsarr.imgid)
             .then(response => {
                 if (response?.data?.data != null) {
