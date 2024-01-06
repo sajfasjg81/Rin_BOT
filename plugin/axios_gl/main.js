@@ -79,6 +79,14 @@ const cfg = [
         tips: "随机美食",
         trigger: ["今天吃什么", "jtcsm", "今晚吃什么", "中午吃什么"],
     },
+    {
+        name: "原神图图",
+        class: "za",
+        plugin: "axios_gl",
+        mstype: "local",
+        trigger: ["原神图图"],
+        off: false,
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -108,6 +116,28 @@ const run = async (ms, msg, type, opdata) => {
                     text: `${opdata.exp[0]} 目标名称`,
                 });
             }
+
+            return backdata;
+        }
+
+        if (ms.name == "原神图图") {
+
+            await axios.get("https://api.52vmy.cn/api/img/tu/yuan?type=text")
+                .then(response => {
+
+                    backdata.push({
+                        bot_type: "imgurl",
+                        text: `${response.data}`,
+                    });
+                })
+                .catch(error => {
+                    backdata.push({
+                        bot_type: "text",
+                        text: `[远程API失败]${error}`,
+                    });
+                    console.error(error);
+                });
+
 
             return backdata;
         }

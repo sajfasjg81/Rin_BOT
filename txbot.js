@@ -116,7 +116,7 @@ event.on('txbot_connect', async function (appid) {
 
         try {
             data = JSON.parse(data);
-            console.log(data);
+            //console.log(data);
 
 
             if (data.s) {

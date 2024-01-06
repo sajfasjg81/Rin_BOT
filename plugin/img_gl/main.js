@@ -8,6 +8,7 @@ const challenges = {
     "合作挑战4": "6596a9797e4bee785e72ff55",
 };
 
+
 const ckmsMappings = {
     "卡马逊食神": "6504fc35186c533c03340648",
     "卡马逊厨神": "6504fc35186c533c03340648",
@@ -198,6 +199,7 @@ const cfg = [
         tips: "卡马逊一图流、额外指令[卡马逊列表]",
         off: false,
     },
+
 ];
 
 const run = async (ms, msg, type, opdata) => {
