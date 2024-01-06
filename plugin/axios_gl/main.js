@@ -1,4 +1,5 @@
 const axios = require('axios');
+const event = require(dir+'/event');
 
 const cfg = [
     {
@@ -97,6 +98,17 @@ const cfg = [
         tips: "参数QQ号，生成一张素描头像。",
         off: false,
     },
+    /*
+    {
+        name: "识图搜番",
+        class: "za",
+        plugin: "axios_gl",
+        mstype: "local",
+        trigger: ["识图搜番"],
+        tips: "根据动漫图片搜索番剧。",
+        off: false,
+    },
+    */
 ];
 
 const run = async (ms, msg, type, opdata) => {
@@ -130,7 +142,58 @@ const run = async (ms, msg, type, opdata) => {
             return backdata;
         }
 
+/*
+//识别率过低停用
+        if (ms.name == "识图搜番") {
+            let upimg = null;
+            if (opdata?.attach?.[0] != null) {
+                upimg = opdata.attach[0].url;
+            }
 
+            if (upimg == null) {
+                backdata.push({
+                    bot_type: "text",
+                    text: `请在指令后面添加图片`,
+                });
+            } else {
+
+                backdata.push({
+                    bot_type: "text",
+                    text: `搜番中...预计30s左右完成。（接口识别率非常低，可以尝试多次识别。）`,
+                });
+
+                axios.get(`https://api.52vmy.cn/api/img/fan?url=${upimg}`)
+                    .then(response => {
+
+                        backdata = [];
+
+                        backdata.push({
+                            bot_type: "text",
+                            text: `疑似名称：${response.data.data.chinesetitle}(${response.data.data.nativetitle})`,
+                        });
+
+                        event.emit('send_cmd', {
+                            type: type,
+                            cmd: ms,
+                            seq: 2,
+                            send: backdata,
+                            exp: msg,
+                            data: opdata,
+                        });
+
+                    })
+                    .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
+                        console.error(error);
+                    });
+            }
+
+            return backdata;
+        }
+*/
         if (ms.name == "素描头像") {
 
             if (opdata?.atlist?.[0] != null) {
@@ -142,7 +205,6 @@ const run = async (ms, msg, type, opdata) => {
                     bot_type: "text",
                     text: `请添加参数\n素描头像 QQ号`,
                 });
-                console.error(error);
             } else {
                 await axios.get(`https://api.52vmy.cn/api/avath/xian?qq=${msg[1]}&type=text`)
                     .then(response => {

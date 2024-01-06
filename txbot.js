@@ -606,33 +606,46 @@ const sendmsg_channel = (d, postData) => {
             'X-Union-Appid': appid
         },
     };
+    let re = 0;
+    const msrun = () => {
+        const req = https.request(options, (res) => {
+            res.on('data', (chunk) => {
+                re++;
+                chunk = JSON.parse(chunk.toString());
+                if (chunk.code != null) {
 
-    const req = https.request(options, (res) => {
-        res.on('data', (chunk) => {
-            chunk = JSON.parse(chunk.toString());
-            if (chunk.code != null) {
-                sys.cmdlog("error", "[官方机器人-QQ频道] 指令处理失败");
-                sys.cmdlog("error", JSON.stringify(chunk));
-                sendmsg = "\n[发生故障]\n" + JSON.stringify(chunk) + "\n频繁显示请发送给猫燐修复。";
-                if (postData.re != 1) {
-                    const np = {
-                        re: 1,
-                        content: sendmsg,
-                        msg_id: postData.msg_id,
-                        timestamp: Date.now(),
-                    };
-                    sendmsg_channel(dd, np);
+                    if (re <= 3) {
+                        console.error(`[发生故障]发送失败，正在重试。msgid ${postData.msg_id}`);
+                        msrun();
+                    } else {
+                        sys.cmdlog("error", JSON.stringify(chunk));
+                        sendmsg = "\n[发生故障]\n" + JSON.stringify(chunk) + "\n频繁显示请发送给猫燐修复。";
+                        if (postData.re != 1) {
+                            const np = {
+                                re: 1,
+                                content: sendmsg,
+                                msg_id: postData.msg_id,
+                                timestamp: Date.now(),
+                            };
+                            sendmsg_channel(dd, np);
+                        }
+                    }
+
+                }else{
+                    console.log(`[发送完成]发送成功 msgid ${postData.msg_id}`);
                 }
-            }
+            });
+            res.on('end', (end) => {
+            });
         });
-        res.on('end', (end) => {
-        });
-    });
 
-    req.on('error', (e) => {
-    });
-    req.write(xdd);
-    req.end();
+        req.on('error', (e) => {
+        });
+        req.write(xdd);
+        req.end();
+    }
+    msrun();
+
 }
 
 //[官方BOT] QQ群 主动发送文本类 每月5次
