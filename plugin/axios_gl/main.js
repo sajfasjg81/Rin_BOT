@@ -307,41 +307,59 @@ const run = async (ms, msg, type, opdata) => {
 
         if (ms.name == "发病文案") {
 
-            if (type == "mirai") {
-                if (opdata?.exp?.[1] != null) {
-                    await axios.get("https://api.lolimi.cn/API/fabing/fb.php?name=" + opdata?.exp[1])
-                        .then(response => {
-                            if (response.data.data == "各个视频的评论区偷的，别被屏蔽qwq") {
-                                backdata.push({
-                                    bot_type: "text",
-                                    text: `指令失败请重试。`,
-                                });
-                            } else {
-                                backdata.push({
-                                    bot_type: "text",
-                                    text: `${response.data.data}`,
-                                });
-                            }
-                        })
-                        .catch(error => {
+            let fbtext = null;
+
+            if (opdata?.exp?.[1] != null) {
+                await axios.get("https://api.lolimi.cn/API/fabing/fb.php?name=" + opdata?.exp[1])
+                    .then(response => {
+                        if (response.data.data == "各个视频的评论区偷的，别被屏蔽qwq") {
                             backdata.push({
                                 bot_type: "text",
-                                text: `[远程API失败]${error}`,
+                                text: `指令失败请重试。`,
                             });
-                            console.error(error);
+                        } else {
+                            fbtext = response.data.data;
+                        }
+                    })
+                    .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
                         });
-                } else {
-                    backdata.push({
-                        bot_type: "text",
-                        text: `请使用指令：${opdata.exp[0]} 要发癫的名称`,
+                        console.error(error);
                     });
-                }
-            }else{
+            } else {
                 backdata.push({
                     bot_type: "text",
-                    text: `上架BOT已禁用该指令，请在其他BOT框架使用该指令。`,
+                    text: `请使用指令：${opdata.exp[0]} 要发癫的名称`,
                 });
             }
+
+            //违规词检测
+            if (fbtext != null) {
+                await axios.get("https://api.52vmy.cn/api/min?msg=" + fbtext)
+                    .then(response => {
+                        if(response.data.data.length >= 1){
+                            backdata.push({
+                                bot_type: "text",
+                                text: `[发癫失败]包含违规词语`,
+                            });
+                        }else{
+                            backdata.push({
+                                bot_type: "text",
+                                text: fbtext,
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
+                        console.error(error);
+                    });
+            }
+
             return backdata;
         }
 
