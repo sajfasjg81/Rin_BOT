@@ -161,7 +161,10 @@ const run = async (ms, msg, type, opdata) => {
             ckmsarr.list = `\n[${ms.name}列表]`;
             botlist.forEach((v, k) => {
                 if (v.class == ckmsarr.class) {
-                    ckmsarr.list += `\n${v.trigger?.[0]}(${v.trigger?.[1]})`;
+                    ckmsarr.list += `\n${v.trigger?.[0]}`;
+                    if(v.trigger?.[1] != null){
+                        ckmsarr.list += `(${v.trigger?.[1]})`;
+                    }
                 }
             });
             
