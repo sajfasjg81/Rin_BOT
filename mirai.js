@@ -183,15 +183,9 @@ event.on('reconnect_mirai', async function (data) {
                 }
                 const sp = msg.split(' ');
                 const exp = sp.map(word => word.trim());
-                const msck = sys.msgck(exp?.[0]);
+                const msck = sys.msgck(exp?.[0],"mirai");
                 send.exp = exp;
                 send.bot = bot;
-
-                event.emit('receive_messages', {
-                    type: 'mirai',
-                    exp: exp,
-                    data: send,
-                });
 
                 if (msck == false) {
                     return;

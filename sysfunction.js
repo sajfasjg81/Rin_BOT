@@ -201,10 +201,21 @@ const get_botcmd = async () => {
 }
 
 //检查字符串是否识别指令
-const msgck = (msname) => {
+const msgck = (msname,type) => {
     if (typeof botcmd[msname] === 'undefined') {
         return false;
     } else {
+        if(type == "gfbot"){
+            if (cfg2.gfban.includes(botlist[botcmd[msname]].name)) {
+                console.log(`[${get_time()}][INFO][官方BOT]${botlist[botcmd[msname]].name}指令已关闭，阻止响应。`);
+                return false;
+            }
+        }else{
+            if (cfg2.ban.includes(botlist[botcmd[msname]].name)) {
+                console.log(`[${get_time()}][INFO][第三方BOT]${botlist[botcmd[msname]].name}指令已关闭，阻止响应。`);
+                return false;
+            }
+        }
         return botlist[botcmd[msname]];
     }
 }

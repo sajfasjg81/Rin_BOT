@@ -208,7 +208,7 @@ event.on('txbot_connect', async function (appid) {
                 if (data.t == "AT_MESSAGE_CREATE") {
                     let msg = sys.set_msg(data.d.content);
                     const exp = sys.set_exp(msg);
-                    const msck = sys.msgck(exp?.[0]);
+                    const msck = sys.msgck(exp?.[0],"gfbot");
                     data = sys.set_data(data,appid,exp);
                     sys.count_add("qqchannel",gfbot[appid].user);
                     console.log(`[${sys.get_time()}][INFO][QQchannel-公域-收到消息]\n■ 频道：${data.channel_room}(${data.groupid})\n■ 消息ID：${data.msgid}\n■ ${msg}`);
@@ -226,7 +226,7 @@ event.on('txbot_connect', async function (appid) {
                 if (data.t == "MESSAGE_CREATE") {
                     let msg = sys.set_msg(data.d.content);
                     const exp = sys.set_exp(msg);
-                    const msck = sys.msgck(exp?.[0]);
+                    const msck = sys.msgck(exp?.[0],"gfbot");
                     data = sys.set_data(data,appid,exp);
                     sys.count_add("qqchannel",gfbot[appid].user);
                     console.log(`[${sys.get_time()}][INFO][QQchannel-私域-收到消息]\n■ 频道：${data.channel_room}(${data.groupid})\n■ 消息ID：${data.msgid}\n■ ${msg}`);
@@ -244,7 +244,7 @@ event.on('txbot_connect', async function (appid) {
                 if (data.t == "GROUP_AT_MESSAGE_CREATE") {
                     let msg = sys.set_msg(data.d.content);
                     const exp = sys.set_exp(msg);
-                    const msck = sys.msgck(exp?.[0]);
+                    const msck = sys.msgck(exp?.[0],"gfbot");
                     data = sys.set_data(data,appid,exp);
                     sys.count_add("qqgroup",gfbot[appid].user);
                     console.log(`[${sys.get_time()}][INFO][GROUP-收到消息]\n■ 群号：${data.groupid}\n■ 消息ID：${data.msgid}\n■ ${msg}`);
@@ -603,7 +603,7 @@ const sendmsgat = (d, postData) => {
         };
 
         let reint = 0;
-        //console.log(`[${d.timestamp}][发送消息] msgid ${d.id}`, postData);
+        console.log(postData);
         function run_ax() {
             const req = https.request(options, (res) => {
                 res.on('data', (chunk) => {

@@ -175,7 +175,15 @@ const cfg = [
         class: "za",
         plugin: "img_gl",
         mstype: "local",
-        trigger: ["元气骑士时间表", "元气时间表"],
+        trigger: ["元气时间", "元气时间表"],
+        off: false,
+    },
+    {
+        name: "元气骑士词缀表",
+        class: "za",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["元气词缀", "元气词缀表"],
         off: false,
     },
     {
@@ -571,6 +579,7 @@ const run = async (ms, msg, type, opdata) => {
     }
 
     if (ms.name == "随机柴郡") {
+        console.log("测试触发");
         backdata.push({
             bot_type: "imgurl",
             text: `https://api.lolimi.cn/API/chaiq/c.php`,
@@ -584,8 +593,6 @@ const run = async (ms, msg, type, opdata) => {
         });
         return backdata;
     }
-
-
 
     if (ckms == "gl") {
         console.log(34);

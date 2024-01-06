@@ -17,6 +17,7 @@ global.sekey = {};
 global.hoshinowss = null;
 global.miraiwss = {};
 global.cfg = null;
+global.cfg2 = null;
 global.botlist = [];
 global.allseq = [];
 global.botcmd = {};
@@ -69,6 +70,7 @@ const ck_cfg = async () => {
         fs.exists(path.join(__dirname, 'cfg', 'cfg.js'), (exists) => {
             if (exists) {
                 cfg = require('./cfg/cfg.js');
+                cfg2 = cfg;
                 resolve(true);
             } else {
                 newcfg = 1;

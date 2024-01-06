@@ -50,7 +50,7 @@ const cfg = [
         plugin: "help",
         mstype: "local",
         tips: "切换指令表展示方式",
-        trigger: ["切换指令","指令切换"],
+        trigger: ["切换指令", "指令切换"],
     },
 ];
 
@@ -124,10 +124,21 @@ const run = async (ms, msg, type, opdata) => {
             let datalist = [];
             botlist.forEach((v, k) => {
                 if (v.class == ckmsarr.class) {
-                    datalist.push({
-                        trigger: v.trigger,
-                        tips: v.tips,
-                    });
+                    if (type == "qqgroup" || type == "qqchannel") {
+                        if (!cfg2.gfban.includes(v.name)) {
+                            datalist.push({
+                                trigger: v.trigger,
+                                tips: v.tips,
+                            });
+                        }
+                    } else {
+                        if (!cfg2.ban.includes(v.name)) {
+                            datalist.push({
+                                trigger: v.trigger,
+                                tips: v.tips,
+                            });
+                        }
+                    }
                 }
             });
 
@@ -161,13 +172,24 @@ const run = async (ms, msg, type, opdata) => {
             ckmsarr.list = `\n[${ms.name}列表]`;
             botlist.forEach((v, k) => {
                 if (v.class == ckmsarr.class) {
-                    ckmsarr.list += `\n${v.trigger?.[0]}`;
-                    if(v.trigger?.[1] != null){
-                        ckmsarr.list += `(${v.trigger?.[1]})`;
+                    if (type == "qqgroup" || type == "qqchannel") {
+                        if (!cfg2.gfban.includes(v.name)) {
+                            ckmsarr.list += `\n${v.trigger?.[0]}`;
+                            if (v.trigger?.[1] != null) {
+                                ckmsarr.list += `(${v.trigger?.[1]})`;
+                            }
+                        }
+                    } else {
+                        if (!cfg2.ban.includes(v.name)) {
+                            ckmsarr.list += `\n${v.trigger?.[0]}`;
+                            if (v.trigger?.[1] != null) {
+                                ckmsarr.list += `(${v.trigger?.[1]})`;
+                            }
+                        }
                     }
                 }
             });
-            
+
             ckmsarr.list += `\n\n使用图片指令表【指令切换】`;
             backdata.push({
                 bot_type: "text",
