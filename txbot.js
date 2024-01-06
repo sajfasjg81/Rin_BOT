@@ -160,24 +160,21 @@ event.on('txbot_connect', async function (appid) {
                     }
                     return;
                 }
-                //Q群消息 加群
+                //[官方BOT事件] BOT加群
                 if (data.t == "GROUP_ADD_ROBOT") {
-                    //开启数据库时有效  猫燐官方BOT使用 其他人别开启
-
                     const datas = {
                         appid: appid,
                         group_openid: data.d.group_openid,
                     };
                     const postDatas = {
-                        content: "欢迎使用[猫燐机器人腾讯平台]版本\n使用文档：https://sv2api.ww2.ren/bothelp",
+                        content: "欢迎使用[RinBOT]腾讯平台版本\n使用文档：https://sv2api.ww2.ren/bothelp",
                         msg_type: 0,
                         timestamp: Date.now(),
                     };
                     sendmsgzhu(datas, postDatas);
-
+                    //发送主动消息 官方似乎每个群限制每月4次
                     //猫燐专用
                     if (cfg.mao_mode == true) {
-
                         let send_msg = {
                             type: "addbot",
                             group: data.d.group_openid,
@@ -188,10 +185,9 @@ event.on('txbot_connect', async function (appid) {
                         await db.save('gf_bot_log', send_msg);
 
                     }
-
                     return;
                 }
-                //Q群消息 被T出群
+                //[官方BOT事件] BOT被T出群
                 if (data.t == "GROUP_DEL_ROBOT") {
                     //猫燐专用
                     if (cfg.mao_mode == true) {
@@ -208,163 +204,67 @@ event.on('txbot_connect', async function (appid) {
                     }
                     return;
                 }
-                //频道消息 公域 AT
+                //[官方BOT事件] 频道消息 公域 AT
                 if (data.t == "AT_MESSAGE_CREATE") {
-
-                    let msg = data.d.content.trim();
-                    const regex = /<@!.*?>/g;
-                    msg = msg.replace(regex, '');
-                    msg = msg.trim();
-                    if (msg.charAt(0) === '/') {
-                        msg = msg.slice(1);
-                    }
-
-
-
-                    const sp = msg.split(' ');
-                    const exp = sp.map(word => word.trim());
+                    let msg = sys.set_msg(data.d.content);
+                    const exp = sys.set_exp(msg);
                     const msck = sys.msgck(exp?.[0]);
-                    data.exp = exp;
-                    data.appid = appid;
-                    data.groupid = data.d.group_openid;
-                    data.attach = data.attachments;
-                    data.atlist = [];
-                    //猫燐专用
-                    if (cfg.mao_mode == true) {
-                        await db.upd('gf_bot_info', {
-                            user: gfbot[appid].user
-                        }, {
-                            $inc: { pdcount: 1 }
-                        });
-                    }
-
-                    cfg.channel_count++;
-                    event.emit('receive_messages', {
-                        type: 'qqchannel',
-                        exp: exp,
-                        data: data,
-                    });
-
-                    if (msck == false) {
-                        return;
-                    } else {
+                    data = sys.set_data(data,appid,exp);
+                    sys.count_add("qqchannel",gfbot[appid].user);
+                    console.log(`[${sys.get_time()}][INFO][QQchannel-公域-收到消息]\n■ 频道：${data.channel_room}(${data.groupid})\n■ 消息ID：${data.msgid}\n■ ${msg}`);
+                    if (msck != false) {
                         event.emit('trigger_instr', {
                             type: 'qqchannel',
                             cmd: msck,
                             exp: exp,
                             data: data,
                         });
-                        return;
                     }
                     return;
-
                 }
-                //频道消息 私域 
+                //[官方BOT事件] 频道消息 私域 
                 if (data.t == "MESSAGE_CREATE") {
-
-                    let msg = data.d.content.trim();
-                    msg = msg.trim();
-                    if (msg.charAt(0) === '/') {
-                        msg = msg.slice(1);
-                    }
-                    const sp = msg.split(' ');
-                    const exp = sp.map(word => word.trim());
+                    let msg = sys.set_msg(data.d.content);
+                    const exp = sys.set_exp(msg);
                     const msck = sys.msgck(exp?.[0]);
-                    data.exp = exp;
-                    data.appid = appid;
-                    data.groupid = data.d.group_openid;
-                    data.attach = data.attachments;
-                    data.atlist = [];
-                    //猫燐专用
-                    if (cfg.mao_mode == true) {
-                        await db.upd('gf_bot_info', {
-                            user: gfbot[appid].user
-                        }, {
-                            $inc: { pdcount: 1 }
-                        });
-                    }
-
-                    cfg.channel_count++;
-
-                    event.emit('receive_messages', {
-                        type: 'qqchannel',
-                        exp: exp,
-                        data: data,
-                    });
-
-                    if (msck == false) {
-                        return;
-                    } else {
+                    data = sys.set_data(data,appid,exp);
+                    sys.count_add("qqchannel",gfbot[appid].user);
+                    console.log(`[${sys.get_time()}][INFO][QQchannel-私域-收到消息]\n■ 频道：${data.channel_room}(${data.groupid})\n■ 消息ID：${data.msgid}\n■ ${msg}`);
+                    if (msck != false) {
                         event.emit('trigger_instr', {
                             type: 'qqchannel',
                             cmd: msck,
                             exp: exp,
                             data: data,
                         });
-                        return;
                     }
                     return;
-                }
-                //群消息
+                    }
+                //[官方BOT事件] 公域私域消息 群消息
                 if (data.t == "GROUP_AT_MESSAGE_CREATE") {
-
-                    cfg.qqgroup_count++;
-
-                    let msg = data.d.content.trim();
-                    const regex = /<@!.*?>/g;
-                    msg = msg.replace(regex, '');
-                    msg = msg.trim();
-
-                    console.log(`[${data.d.timestamp}][WS消息] gid ${data.d.group_openid} msgid ${data.d.id} msg ${msg}`);
-
-                    if (msg.charAt(0) === '/') {
-                        msg = msg.slice(1);
-                    }
-                    const sp = msg.split(' ');
-                    const exp = sp.map(word => word.trim());
+                    let msg = sys.set_msg(data.d.content);
+                    const exp = sys.set_exp(msg);
                     const msck = sys.msgck(exp?.[0]);
-                    data.exp = exp;
-                    data.appid = appid;
-                    data.groupid = data.d.group_openid;
-                    data.attach = data.attachments;
-                    data.atlist = [];
-                    event.emit('receive_messages', {
-                        type: 'qqgroup',
-                        exp: exp,
-                        data: data,
-                    });
-
-                    //猫燐专用
-                    if (cfg.mao_mode == true) {
-                        await db.upd('gf_bot_info', {
-                            user: gfbot[appid].user
-                        }, {
-                            $inc: { qqcount: 1 }
-                        });
-                    }
-
-                    if (msck == false) {
-                        return;
-                    } else {
+                    data = sys.set_data(data,appid,exp);
+                    sys.count_add("qqgroup",gfbot[appid].user);
+                    console.log(`[${sys.get_time()}][INFO][GROUP-收到消息]\n■ 群号：${data.groupid}\n■ 消息ID：${data.msgid}\n■ ${msg}`);
+                    if (msck != false) {
                         event.emit('trigger_instr', {
                             type: 'qqgroup',
                             cmd: msck,
                             exp: exp,
                             data: data,
                         });
-                        return;
                     }
                     return;
                 }
             }
             return true;
         } catch (err) {
-            console.error(err);
-
+            console.error(`[${sys.get_time()}][ERROR]`,err);
             return false;
         }
     });
-
 
 });
 

@@ -97,7 +97,8 @@ eve.on('trigger_instr', async function (data, seq = 1) {
 
 //接收的消息
 eve.on('receive_messages', function (data) {
-
+    return; 
+    //废弃
     if (data.type == "mirai") {
         //sys.cmdlog("info", `\x1b[36m[` + data.type + `-${data.data.bot}] ${data.data.groupid}（${data.data.authorid}）：${data.data.msg}\x1b[0m`);
     } else {

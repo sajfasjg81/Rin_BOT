@@ -3,6 +3,7 @@ const os = require('os');
 const { memoryUsage } = process;
 const https = require('https');
 const fs = require('fs');
+const db = require('./mongodb');
 const { Console } = require('console');
 const path = require('path');
 const cmdlog = (type, msg) => {
@@ -21,6 +22,76 @@ const cmdlog = (type, msg) => {
     if (type == "error") {
         console.log(`\x1b[31m[ERROR]${formattedHours}:${formattedminutes}:${formattedseconds} ${msg}\x1b[0m`);
     }
+}
+
+
+//[官方BOT] count增加
+const count_add = async (type, user) => {
+    if (type == "qqgroup") {
+        //猫燐专用
+        if (cfg.mao_mode == true) {
+            await db.upd('gf_bot_info', { user: user }, { $inc: { qqcount: 1 } });
+        }
+        cfg.qqgroup_count++;
+        return;
+    }
+    if (type == "qqchannel") {
+        if (cfg.mao_mode == true) { //猫燐专用
+            await db.upd('gf_bot_info', { user: user }, { $inc: { pdcount: 1 } });
+        }
+        cfg.channel_count++;
+        return;
+    }
+    return;
+}
+
+//[官方BOT] msg转换
+const set_msg = (msg) => {
+    msg = msg.trim();
+    const regex = /<@!.*?>/g;
+    msg = msg.replace(regex, '');
+    msg = msg.trim();
+    if (msg.charAt(0) === '/') {
+        msg = msg.slice(1);
+    }
+    return msg;
+}
+//[函数] 获取时间
+const get_time = () => {
+    const date = new Date();
+    const options = {
+        timeZone: "Asia/Shanghai", // 指定时区为上海  
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+    return date.toLocaleString('zh-CN', { ...options });
+}
+//[官方BOT] exp转换
+const set_exp = (msg) => {
+    const sp = msg.split(' ');
+    const exp = sp.map(word => word.trim());
+    return exp;
+}
+//[官方BOT] data数组
+const set_data = (data, appid, exp) => {
+    if (data.t == "GROUP_AT_MESSAGE_CREATE") {
+        //群消息
+        data.groupid = data.d.group_openid;
+        data.channel_room = null;
+    } else {
+        //频道消息
+        data.groupid = data.d.channel_id;
+        data.channel_room = data.d.guild_id; //频道号？
+    }
+    data.attach = data.attachments;
+    data.appid = appid;
+    data.msgid = data.d.id;
+    data.exp = exp;
+    data.attach = data.attachments;
+    data.atlist = [];
+    return data;
 }
 
 //[官方BOT] QQ群 发送图片类
@@ -319,4 +390,4 @@ const load_json = async (file) => {
     });
 }
 
-module.exports = { load_json, save_json, cmdlog, msgck, run_bot_cmd, get_botcmd, sendmsgfile };
+module.exports = { get_time,count_add, set_data, set_exp, set_msg, load_json, save_json, cmdlog, msgck, run_bot_cmd, get_botcmd, sendmsgfile };
