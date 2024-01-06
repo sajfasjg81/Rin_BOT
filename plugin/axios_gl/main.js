@@ -85,6 +85,16 @@ const cfg = [
         plugin: "axios_gl",
         mstype: "local",
         trigger: ["原神图图"],
+        tips: "随机返回一张原神图片",
+        off: false,
+    },
+    {
+        name: "素描头像",
+        class: "yule",
+        plugin: "axios_gl",
+        mstype: "local",
+        trigger: ["素描头像"],
+        tips: "参数QQ号，生成一张素描头像。",
         off: false,
     },
 ];
@@ -115,6 +125,40 @@ const run = async (ms, msg, type, opdata) => {
                     bot_type: "text",
                     text: `${opdata.exp[0]} 目标名称`,
                 });
+            }
+
+            return backdata;
+        }
+
+
+        if (ms.name == "素描头像") {
+
+            if (opdata?.atlist?.[0] != null) {
+                msg[1] = opdata.atlist[0];
+            }
+
+            if (msg[1] == null) {
+                backdata.push({
+                    bot_type: "text",
+                    text: `请添加参数\n素描头像 QQ号`,
+                });
+                console.error(error);
+            } else {
+                await axios.get(`https://api.52vmy.cn/api/avath/xian?qq=${msg[1]}&type=text`)
+                    .then(response => {
+
+                        backdata.push({
+                            bot_type: "imgurl",
+                            text: `${response.data}`,
+                        });
+                    })
+                    .catch(error => {
+                        backdata.push({
+                            bot_type: "text",
+                            text: `[远程API失败]${error}`,
+                        });
+                        console.error(error);
+                    });
             }
 
             return backdata;
