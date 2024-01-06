@@ -154,7 +154,7 @@ event.on('reconnect_mirai', async function (data) {
                         //如果@的是猫燐助手 忽略
                     }
                 }
-
+                //console.log(send);
                 if (send.msg.length <= 1) {
                     send.msg = send.img;
                 }

@@ -445,6 +445,10 @@ const run = async (ms, msg, type, opdata) => {
             opdata.exp[1] = opdata?.atlist?.[0];
         }
 
+        if(opdata.exp[1] == null && type == "mirai"){
+            opdata.exp[1] = opdata.authorid;
+        }
+
         if (opdata?.exp[1] != null) {
             let randomIndex = Math.floor(Math.random() * rdl.length);
             let randomNumber = rdl[randomIndex];

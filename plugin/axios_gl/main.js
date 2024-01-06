@@ -199,7 +199,9 @@ const run = async (ms, msg, type, opdata) => {
             if (opdata?.atlist?.[0] != null) {
                 msg[1] = opdata.atlist[0];
             }
-
+            if(msg[1] == null && type == "mirai"){
+                msg[1] = opdata.authorid;
+            }
             if (msg[1] == null) {
                 backdata.push({
                     bot_type: "text",
