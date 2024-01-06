@@ -24,6 +24,20 @@ const cfg = [
         trigger: ["攻略", "攻略指令"],
     },
     {
+        name: "其他指令",
+        class: "ms",
+        plugin: "help",
+        mstype: "local",
+        trigger: ["其他", "其他指令"],
+    },
+    {
+        name: "会战指令",
+        class: "ms",
+        plugin: "help",
+        mstype: "local",
+        trigger: ["会战", "会战指令"],
+    },
+    {
         name: "切换指令",
         class: "ms",
         plugin: "help",
@@ -81,6 +95,14 @@ const run = async (ms, msg, type, opdata) => {
     if (ms.name == "攻略指令") {
         ckms = "zlb";
         ckmsarr.class = "wt";
+    }
+    if (ms.name == "会战指令") {
+        ckms = "zlb";
+        ckmsarr.class = "guild";
+    }
+    if (ms.name == "其他指令") {
+        ckms = "zlb";
+        ckmsarr.class = "za";
     }
     if (ckms == "zlb") {
         if (type == "mirai") {
