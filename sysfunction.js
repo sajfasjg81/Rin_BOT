@@ -336,7 +336,7 @@ const run_bot_cmd = async (ms, msg, type, opdata) => {
                 }
 
 
-                console.log(`[请求地址]${ms___url}`);
+                console.log(`[${get_time()}][INFO][请求地址] ${ms___url}`);
 
                 axios.get(ms___url)
                     .then(response => {

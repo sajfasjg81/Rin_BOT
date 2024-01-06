@@ -411,14 +411,14 @@ const send_msg_back = (cmdback, data, seq = 1) => {
                     url: v.text,
                 };
 
-                console.log(`[${data.d.timestamp}][图片地址] msgid ${data.d.id} url ${v.text} `);
+                console.log(`[${sys.get_time()}][INFO][图片地址] ${v.text} `);
                 let re = 0;
                 let backfile;
                 function resfile() {
                     re++;
                     sendmsgfile(data, filedata)
                         .then(result => {
-                            console.log(`[${data.d.timestamp}][图片已上传] msgid ${data.d.id}  `);
+                            //console.log(`[${sys.get_time()}][INFO][上传完成] msgid ${data.d.id}  `);
                             // 处理成功的结果  
                             seq++;
                             const postData = {
@@ -432,7 +432,7 @@ const send_msg_back = (cmdback, data, seq = 1) => {
                         })
                         .catch(error => {
                             if (re >= 3) {
-                                console.error(`[${data.d.timestamp}][图片上传失败] msgid ${data.d.id}  `);
+                                console.error(`[${sys.get_time()}][上传失败] msgid ${data.d.id}  `);
                                 sendmsg = sendmsg + `${error} 失败`;
                                 console.error(error + "失败");
                                 seq++;
@@ -447,7 +447,7 @@ const send_msg_back = (cmdback, data, seq = 1) => {
 
                                 return;
                             } else {
-                                console.error(`[${data.d.timestamp}][图片上传失败重试] msgid ${data.d.id}  `);
+                                console.error(`[${sys.get_time()}][上传重试] msgid ${data.d.id}  `);
                                 resfile();
                             }
                         });
@@ -603,7 +603,7 @@ const sendmsgat = (d, postData) => {
         };
 
         let reint = 0;
-        console.log(`[${d.timestamp}][发送内容] msgid ${d.id}`, postData);
+        //console.log(`[${d.timestamp}][发送消息] msgid ${d.id}`, postData);
         function run_ax() {
             const req = https.request(options, (res) => {
                 res.on('data', (chunk) => {
@@ -617,7 +617,7 @@ const sendmsgat = (d, postData) => {
                             run_ax();
                         }
                     } else {
-                        console.log(`[${d.timestamp}][消息已发] msgid ${d.id}`, chunk);
+                        console.log(`[${sys.get_time()}][INFO][发送成功] ${d.id}`);
                     }
                 });
                 res.on('end', (end) => {

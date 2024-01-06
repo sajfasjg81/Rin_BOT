@@ -62,7 +62,7 @@ eve.on('send_cmd', async function (data) {
 
 //接收的指令
 eve.on('trigger_instr', async function (data, seq = 1) {
-    console.log(data);
+    //console.log(data);
     if (data.cmd.mstype == "local") {
         const cmdback = await sys.run_bot_cmd(data.cmd, data.exp, data.type, data.data, seq);
         if (cmdback == null) { return; }
