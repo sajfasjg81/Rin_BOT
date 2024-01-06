@@ -38,6 +38,13 @@ const cfg = [
         trigger: ["会战", "会战指令"],
     },
     {
+        name: "ba指令",
+        class: "ms",
+        plugin: "help",
+        mstype: "local",
+        trigger: ["ba", "ba指令"],
+    },
+    {
         name: "切换指令",
         class: "ms",
         plugin: "help",
@@ -87,6 +94,10 @@ const run = async (ms, msg, type, opdata) => {
     if (ms.name == "pcr指令") {
         ckms = "zlb";
         ckmsarr.class = "pcr";
+    }
+    if (ms.name == "ba指令") {
+        ckms = "zlb";
+        ckmsarr.class = "ba";
     }
     if (ms.name == "娱乐指令") {
         ckms = "zlb";
@@ -153,11 +164,12 @@ const run = async (ms, msg, type, opdata) => {
                     ckmsarr.list += `\n${v.trigger?.[0]}(${v.trigger?.[1]})`;
                 }
             });
+            
+            ckmsarr.list += `\n\n使用图片指令表【指令切换】`;
             backdata.push({
                 bot_type: "text",
                 text: ckmsarr.list,
             });
-            ckmsarr.list = `\n图片指令表请使用指令【指令切换】`;
         }
 
         return backdata;
