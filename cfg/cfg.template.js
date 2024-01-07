@@ -1,56 +1,74 @@
 const cfg = {
+    token : '',//勿改
+    tokenout : 0,//勿改
+    user : null,//勿改
+    wssurl : '', //勿改
 
-    // true 开启  false 关闭
-
-    //猫燐账号信息
-    authkey : "你的猫燐小助手账号authkey",  //登录后获取
-    sandbox : false , //返回开发指令 （authkey非管理员级别无效）
-    cmdsave: false, // 是否保存猫燐指令到本地，设置为TRUE时只有首次下载指令，后续需要使用指令 【更新指令】
+    //猫燐信息
+    authkey : "你的猫燐小助手账号authkey",  //无效配置暂不生效
+    sandbox : true , //无效配置暂不生效 返回开发指令 （authkey非管理员级别无效）
+    cmdsave: false, // 无效配置暂不生效 是否保存猫燐指令到本地，设置为TRUE时只有首次下载指令，后续需要使用指令 【更新指令】
     bot_cmd_url : "https://sv2api.ww2.ren/?t=get/os/bot_command", //API指令地址
+
+
+    //反代
+    pixiv:"",//pixiv反代 影响图图指令
+    //禁用指令
+    gfban : [], //官方BOT禁用
+    ban: [],  //Mirai 等第三方BOT禁用
+
+    //ba插件配置
+    baapitoken: "ba-token ??:??", //通过什亭之匣获取
+    baapih : 6, //总力战每X小时刷新一次数据
+
+    //Hoshino配置
+    //功能没写完 别true
+    //hoshinobot : false, //是否启动hoshino功能（需要自行搭建hoshinoBOT程序）
+    //hoshino_host : "", //hoshino服务器地址
+    //hoshino_wsport : "", //hoshino服务器地址
+
+    //http服务
+    //弃用
+    //http_mode : true, //是否开启http服务器  用于api查询服务器状态
+    //http_port : 0, //http服务器端口
+
+
+    //猫燐攻略地址
+    cdnurl : "https://t.ww2.ren/neko_code/gl/",  //腾讯官方群
+    cdnurl_end : "/jpg",
+    cdnurl2 : "https://t2.ww2.ren/neko_code/gl/",  //腾讯官方频道
+    cdnurl2_end : "/jpg",
+    cdnurl3 : "https://t2.ww2.ren/neko_code/gl/",  //第三方BOT
+    cdnurl3_end : "/jpg",
 
     //官方BOT类
     mode : 1 , //1 = 公共模式运行 2 = 群模式运行  （公共就是每个人都要绑定公会） 群就是 同一个群绑定同一个公会
-    appid : "请输入官方BOTappid", //官方机器人appid  注册>https://q.qq.com/#/
-    ak : "请输入AppSecret",//官方机器人的 AppSecret
-    group_mode :  true,//是否开启官方QQ群机器人
-    qqchannel_mode :  true,//是否开启官方QQ频道机器人
-    qqchannel_at : false,//是否为公域机器人，全域和私域订阅类型不同，私域不用@ 公域必须@
+    gmode : 1, // 默认运行模式  1=公共模式 2=绑定模式
+    
+    botlist : [
+        {
+
+        },
+    ],
+    group_mode :  true,//是否开启官方QQ群机器人功能
+    qqchannel_mode :  true,//是否开启官方QQ频道机器人功能
     //官方BOT类
 
-    //http服务
-    http_mode : false, //是否开启http服务器  用于api查询服务器状态
-    http_port : 32131, //http服务器端口
-
     //mirai类
-    mirai_test : false, // 是否开启测试模式
-    mirai_test_user : 10000 , //测试模式的许可QQ号，只影响猫燐指令。
-    mirai_wsport : 8080,//mirai ws的端口
-    mirai_host : "0.0.0.0", //正向ws服务器地址
-    verifyKey : "verifyKey", //修改为mirai的verifyKey
-    mirai_mode : 1, //默认模式 1 = 公共模式运行 2 = 群模式运行  （公共就是每个人都要绑定公会） 群模式就是以前那种绑定群的
-    mirai_qq : [ 10000, ],//绑定的机器人QQ号  如 10000,10001,10002
-    //mirai类
+    mirai_mode : 1, // 是否启用Mirai BOT
+    mirai_wsport : 8080,//启动的mirai ws正方服务器端口，必须与mirai程序的cqhttp插件一样。
+    mirai_host : "localhost", //正向ws服务器地址，必须与mirai程序的cqhttp插件一样。
+    verifyKey : "",
+    mirai_qq : [ ],//绑定的机器人QQ号  如 10000,10001,10002
 
-    //gocq类
-    gocq_mode : false, //无效  gocq已停更
-    gocq_type : false, //无效  gocq已停更
-    //gocq类
-
-    //数据库类
-    db_mode : false, //是否开启mongodb数据库
-    host : "dbname", //数据库用户名 不懂把 db_mode 设置为false
-    pw : "pw", //数据库密码 不懂把 db_mode 设置为false
-    base : "dbname", //数据库名 不懂把 db_mode 设置为false
-    //数据库类
-
-    token : '',//勿改
-    user : null,//勿改
-    tokenout : 0,//勿改
-    wssurl : '', //勿改
-    s:null,//勿改
-    online : 1,//勿改
-    qqgroup_count : 0,//勿改
-    channel_count : 0,//勿改
+    //其他
+    mao_mode : false, //是否在猫燐服务器运行，自搭BOT请设置为false，否则无法使用。
+    host : "", //仅猫燐服务器运行有效
+    pw : "",//仅猫燐服务器运行有效
+    base : "", //仅猫燐服务器运行有效
+    online : 1, //勿改
+    qqgroup_count : 0, //勿改
+    channel_count : 0, //勿改
 };
 
 module.exports = cfg;

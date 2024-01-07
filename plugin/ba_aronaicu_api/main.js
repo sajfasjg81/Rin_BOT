@@ -3,7 +3,7 @@ const fs = require('fs');
 const sys = require(dir + '/sysfunction');
 const apitoken = cfg2.baapitoken;
 let batimer = null;
-const retime = 60 * 60 * 1000;
+const retime = 60 * 60 * cfg2.baapih * 1000;
 let bafiletime = {
 
 };
@@ -21,9 +21,19 @@ const cfg = [
         class: "ba",
         plugin: "ba_aronaicu_api",
         mstype: "local",
-        tips: "查询国服总力战最低分",
-        trigger: ["ba底分"],
+        tips: "查询国服总力战低分/边界",
+        trigger: ["ba底分","ba边界"],
     },
+    /*
+    {
+        name: "ba活动信息",
+        class: "ba",
+        plugin: "ba_aronaicu_api",
+        mstype: "local",
+        tips: "查询国服活动列表",
+        trigger: ["ba活动信息"],
+    },
+    */
 ];
 
 const start = async () => {
