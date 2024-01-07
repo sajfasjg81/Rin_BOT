@@ -22,12 +22,28 @@ const ckmsMappings = {
     "卡马逊额外": "6504fc35186c533c03340627",
 };
 
+
+
 const keys = Object.keys(ckmsMappings);
 let kmx_mstext = "";
 let kmxpush = [];
 for (let i = 0; i < keys.length; i++) {
     kmx_mstext += `${keys[i]}\n`
     kmxpush.push(keys[i]);
+}
+
+const sjMappings = {
+    "赛季1":"659b240942d8370c166d4257",
+    "赛季2":"6504fc35186c533c03340645",
+    "赛季3": "6504fc35186c533c03340649",
+    "赛季4": "656dc67ae2f42045c6199ca2",
+};
+const keys2 = Object.keys(sjMappings);
+let sj_mstext = "";
+let sjpush = [];
+for (let i = 0; i < keys2.length; i++) {
+    sj_mstext += `${keys2[i]}\n`
+    sjpush.push(keys2[i]);
 }
 
 const cfg = [
@@ -204,8 +220,17 @@ const cfg = [
         class: "wt",
         plugin: "img_gl",
         mstype: "local",
-        trigger: ["卡马逊", "kmx", "卡马逊列表", "卡马逊额外",...kmxpush],
+        trigger: ["卡马逊", "kmx", "卡马逊列表", "卡马逊额外", ...kmxpush],
         tips: "卡马逊一图流、额外指令[卡马逊列表]",
+        off: false,
+    },
+    {
+        name: "赛季成就",
+        class: "wt",
+        plugin: "img_gl",
+        mstype: "local",
+        trigger: ["赛季成就", "赛季", "赛季成就列表", "赛季列表", ...sjpush],
+        tips: "赛季成就一图流、额外指令[赛季成就列表]",
         off: false,
     },
 
@@ -240,12 +265,33 @@ const run = async (ms, msg, type, opdata) => {
         }
     }
 
+
+    if (ms.name == "赛季成就") {
+        if (msg[0] == "赛季" || msg[0] == "赛季成就") {
+            ckms = "gl";
+            ckmsarr.imgid = `&id=6504fc35186c533c0334063e`;
+        }
+        if (msg[0] == "赛季列表" || msg[0] == "赛季成就列表") {
+            backdata.push({
+                bot_type: "text",
+                text: `[赛季成就指令列表]\n\n${sj_mstext}\n※缺失或错误联系猫燐修复，请带一图流。`,
+            });
+            return backdata;
+        }
+
+        if (sjMappings.hasOwnProperty(msg[0])) {
+            ckms = "gl";
+            ckmsarr.imgid = `&id=${sjMappings[msg[0]]}`;
+        }
+
+    }
+
     if (ms.name == "卡马逊") {
         if (msg[0] == "卡马逊") {
             ckms = "gl";
             ckmsarr.imgid = `&id=6504fc35186c533c03340624`;
         }
- 
+
         if (msg[0] == "卡马逊列表") {
             backdata.push({
                 bot_type: "text",
@@ -454,7 +500,7 @@ const run = async (ms, msg, type, opdata) => {
             opdata.exp[1] = opdata?.atlist?.[0];
         }
 
-        if(opdata.exp[1] == null && type == "mirai"){
+        if (opdata.exp[1] == null && type == "mirai") {
             opdata.exp[1] = opdata.authorid;
         }
 
@@ -596,7 +642,6 @@ const run = async (ms, msg, type, opdata) => {
     }
 
     if (ckms == "gl") {
-        console.log(34);
         await axios.get('https://sv2api.ww2.ren/?t=get/gfbot/gl' + ckmsarr.imgid)
             .then(response => {
                 if (response?.data?.data != null) {
