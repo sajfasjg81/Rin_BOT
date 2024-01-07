@@ -186,6 +186,7 @@ event.on('reconnect_mirai', async function (data) {
                 const msck = sys.msgck(exp?.[0],"mirai");
                 send.exp = exp;
                 send.bot = bot;
+                send.qq = sender.id;
 
                 if (msck == false) {
                     return;

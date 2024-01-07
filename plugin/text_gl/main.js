@@ -23,12 +23,29 @@ const cfg = [
         mstype: "local",
         trigger: ["重载指令", "reload", "rems"],
     },
+    {
+        name: "群信息",
+        class: "hide",
+        plugin: "text_gl",
+        mstype: "local",
+        trigger: ["群信息"],
+    },
 ];
 
 const run = async (ms, msg, type, opdata) => {
     backdata = [];
     let ckms = "";
     let ckmsarr = {};
+
+
+    if(ms.name == "群信息"){
+        console.log(opdata);
+        backdata.push({
+            bot_type: "text",
+            text: `群号：\n${opdata.groupid}\nQQ号：\n${opdata.qq}`,
+        });
+        return backdata;
+    }
 
     if (ms.name == "pcrwiki") {
         backdata.push({

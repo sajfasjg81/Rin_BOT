@@ -85,6 +85,8 @@ const set_data = (data, appid, exp) => {
         data.groupid = data.d.channel_id;
         data.channel_room = data.d.guild_id; //频道号？
     }
+    
+    data.qq = data.d.author.id;
     data.attach = data.attachments;
     data.appid = appid;
     data.msgid = data.d.id;
