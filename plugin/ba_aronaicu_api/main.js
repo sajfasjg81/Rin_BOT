@@ -4,13 +4,17 @@ const sys = require(dir + '/sysfunction');
 const apitoken = cfg2.baapitoken;
 let batimer = null;
 const retime = 60 * 60 * 1000;
+let bafiletime = {
+
+};
 const cfg = [
     {
         name: "ba档线",
         class: "ba",
         plugin: "ba_aronaicu_api",
         mstype: "local",
-        trigger: ["ba档线", "ba档线B服", "ba档线b服", "ba档线国服"],
+        tips: "查询国服总力战档线",
+        trigger: ["ba档线", "ba档线国服", "ba档线B服", "ba档线b服"],
     },
 ];
 
@@ -48,7 +52,7 @@ const start = async () => {
             season: "latest",
             type: 2,
             page: 1,
-            size: 21,
+            size: 16,
         };
         const url = 'https://api.arona.icu/api/v2/rank/list';
         await axios.post(url, data, {
@@ -68,8 +72,26 @@ const start = async () => {
     const run_get = async () => {
         console.log(`[info]正在获取BA官服档线`);
         await rank_cngf();
+        fs.stat(`${dir}/json/ba_dang_gf.json`, (err, stats) => {
+            if (err) {
+                console.error('获取文件修改日期时出错:', err);
+            } else {
+                const modificationTime = stats.mtime;
+                bafiletime['gf'] = new Date(modificationTime); 
+                bafiletime['gf'] = `${bafiletime['gf'].getFullYear()}/${bafiletime['gf'].getMonth() + 1}/${bafiletime['gf'].getDate()} ${bafiletime['gf'].getHours()}:${bafiletime['gf'].getMinutes()}:${bafiletime['gf'].getSeconds()}`;
+            }
+        });
         console.log(`[info]正在获取BAB服档线`);
         await rank_cnbf();
+        fs.stat(`${dir}/json/ba_dang_bf.json`, (err, stats) => {
+            if (err) {
+                console.error('获取文件修改日期时出错:', err);
+            } else {
+                const modificationTime = stats.mtime;
+                bafiletime['bf'] = new Date(modificationTime); 
+                bafiletime['bf'] = `${bafiletime['bf'].getFullYear()}/${bafiletime['bf'].getMonth() + 1}/${bafiletime['bf'].getDate()} ${bafiletime['bf'].getHours()}:${bafiletime['bf'].getMinutes()}:${bafiletime['bf'].getSeconds()}`;
+            }
+        });
     }
 
     batimer = setInterval(function () {
@@ -82,6 +104,7 @@ const start = async () => {
             console.log('BA缓存文件不存在');
             run_get();
         } else {
+
             fs.stat(`${dir}/json/ba_dang_bf.json`, (err, stats) => {
                 if (err) {
                     console.error('获取文件修改日期时出错:', err);
@@ -95,6 +118,27 @@ const start = async () => {
                     }
                 }
             });
+
+            fs.stat(`${dir}/json/ba_dang_gf.json`, (err, stats) => {
+                if (err) {
+                    console.error('获取文件修改日期时出错:', err);
+                } else {
+                    const modificationTime = stats.mtime;
+                    bafiletime['gf'] = new Date(modificationTime); 
+                    bafiletime['gf'] = `${bafiletime['gf'].getFullYear()}/${bafiletime['gf'].getMonth() + 1}/${bafiletime['gf'].getDate()} ${bafiletime['gf'].getHours()}:${bafiletime['gf'].getMinutes()}:${bafiletime['gf'].getSeconds()}`;
+                }
+            });
+
+            fs.stat(`${dir}/json/ba_dang_bf.json`, (err, stats) => {
+                if (err) {
+                    console.error('获取文件修改日期时出错:', err);
+                } else {
+                    const modificationTime = stats.mtime;
+                    bafiletime['bf'] = new Date(modificationTime); 
+                    bafiletime['bf'] = `${bafiletime['bf'].getFullYear()}/${bafiletime['bf'].getMonth() + 1}/${bafiletime['bf'].getDate()} ${bafiletime['bf'].getHours()}:${bafiletime['bf'].getMinutes()}:${bafiletime['bf'].getSeconds()}`;
+                }
+            });
+
         }
     });
     console.log(`[${sys.get_time()}][info]正在运行BA总力战自动程序`);
@@ -115,6 +159,7 @@ const run = async (ms, msg, type, opdata) => {
 
         if (msg[0] == "ba档线国服") {
             const dang = await sys.load_json(`${dir}/json/ba_dang_gf.json`)
+
             backdata.push({
                 bot_type: "text",
                 text: `[蔚蓝档案国服总力战档线]\n`,
@@ -134,7 +179,7 @@ const run = async (ms, msg, type, opdata) => {
                 });
                 backdata.push({
                     bot_type: "text",
-                    text: `\n\n※B服指令：ba档案b服\n数据来源：什亭之匣(Arona ICU)(已授权)\n`,
+                    text: `\n\n※B服指令：ba档案b服\n※数据来源：什亭之匣(Arona ICU)(已授权)\n※缓存时间：${bafiletime['gf']}`,
                 });
             }
         }
@@ -160,7 +205,7 @@ const run = async (ms, msg, type, opdata) => {
                 });
                 backdata.push({
                     bot_type: "text",
-                    text: `\n\n※国服指令：ba档案国服 ba档案b服\n数据来源：什亭之匣(Arona ICU)(已授权)\n`,
+                    text: `\n\n※国服指令：ba档案国服 ba档案b服\n※数据来源：什亭之匣(Arona ICU)(已授权)\n※缓存时间：${bafiletime['bf']}`,
                 });
             }
         }
