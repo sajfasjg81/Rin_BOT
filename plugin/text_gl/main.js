@@ -39,7 +39,7 @@ const run = async (ms, msg, type, opdata) => {
 
 
     if(ms.name == "群信息"){
-        console.log(opdata);
+        //console.log(opdata);
         backdata.push({
             bot_type: "text",
             text: `群号：\n${opdata.groupid}\nQQ号：\n${opdata.qq}`,

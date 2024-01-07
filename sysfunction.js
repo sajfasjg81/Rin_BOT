@@ -85,7 +85,7 @@ const set_data = (data, appid, exp) => {
         data.groupid = data.d.channel_id;
         data.channel_room = data.d.guild_id; //频道号？
     }
-    
+
     data.qq = data.d.author.id;
     data.attach = data.attachments;
     data.appid = appid;
@@ -178,13 +178,16 @@ const get_botcmd = async () => {
                 }
 
                 // 遍历文件和子目录  
-                files.forEach(file => {
+                files.forEach(async file => {
                     const filePath = path.join(directoryPath, file);
                     const stat = fs.statSync(filePath);
 
                     // 如果是目录，则添加到结果数组中  
                     if (stat.isDirectory()) {
                         const lmode = require(`${directoryPath}${file}/main.js`);
+                        if (typeof lmode.start === 'function') {
+                            await lmode.start();
+                        }
                         lmode.cfg.forEach((v, k) => {
                             v.trigger.forEach((v2, k2) => {
                                 botcmd[v2] = botlist.length;
@@ -203,16 +206,16 @@ const get_botcmd = async () => {
 }
 
 //检查字符串是否识别指令
-const msgck = (msname,type) => {
+const msgck = (msname, type) => {
     if (typeof botcmd[msname] === 'undefined') {
         return false;
     } else {
-        if(type == "gfbot"){
+        if (type == "gfbot") {
             if (cfg2.gfban.includes(botlist[botcmd[msname]].name)) {
                 console.log(`[${get_time()}][INFO][官方BOT]${botlist[botcmd[msname]].name}指令已关闭，阻止响应。`);
                 return false;
             }
-        }else{
+        } else {
             if (cfg2.ban.includes(botlist[botcmd[msname]].name)) {
                 console.log(`[${get_time()}][INFO][第三方BOT]${botlist[botcmd[msname]].name}指令已关闭，阻止响应。`);
                 return false;
@@ -233,6 +236,7 @@ const run_bot_cmd = async (ms, msg, type, opdata) => {
             //本地指令
             if (ms.mstype == "local") {
                 const lmode = require(`${dir}/plugin/${ms.plugin}/main.js`);
+
                 let backdata = await lmode.run(ms, msg, type, opdata);
                 if (backdata?.length <= 0) {
                     resolve();
@@ -403,4 +407,4 @@ const load_json = async (file) => {
     });
 }
 
-module.exports = { get_time,count_add, set_data, set_exp, set_msg, load_json, save_json, cmdlog, msgck, run_bot_cmd, get_botcmd, sendmsgfile };
+module.exports = { get_time, count_add, set_data, set_exp, set_msg, load_json, save_json, cmdlog, msgck, run_bot_cmd, get_botcmd, sendmsgfile };

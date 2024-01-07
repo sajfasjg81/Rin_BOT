@@ -119,7 +119,7 @@ const run = async (ms, msg, type, opdata) => {
         if (type == "mirai") {
             opdata.appid = opdata.bot;
         }
-        console.log(ms_swich);
+        //console.log(ms_swich);
         if (ms_swich[opdata.groupid] == 1) {
             let datalist = [];
             botlist.forEach((v, k) => {
