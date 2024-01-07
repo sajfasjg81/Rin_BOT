@@ -165,7 +165,7 @@ const get_botcmd = async () => {
                     botcmd[v2] = k;
                 });
             });
-            console.log('注册猫燐远程指令成功');
+            console.log(`[${get_time()}][INFO]注册猫燐远程指令成功`);
 
             // 指定目录路径  
             const directoryPath = `${dir}/plugin/`;
@@ -380,7 +380,7 @@ const save_json = async (file, json) => {
     return new Promise(async (resolve, reject) => {
         fs.writeFile(file, JSON.stringify(json), (err) => {
             if (!err) {
-                console.log(`\x1b[36m[INFO]${file} JSON文件写入成功`);
+                //console.log(`\x1b[36m[INFO]${file} JSON文件写入成功`);
                 resolve();
             } else {
                 reject(err);
@@ -394,7 +394,7 @@ const load_json = async (file) => {
     return new Promise(async (resolve, reject) => {
         fs.readFile(file, 'utf8', (err, data) => {
             if (!err) {
-                console.log(`\x1b[36m[INFO]${file} JSON文件载入成功`);
+                //console.log(`\x1b[36m[INFO]${file} JSON文件载入成功`);
                 resolve(JSON.parse(data));
             } else {
                 resolve({});

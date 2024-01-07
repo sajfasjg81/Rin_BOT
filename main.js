@@ -40,7 +40,7 @@ const start = async () => {
         sys.cmdlog("info", "载入配置文件成功");
         await rundb();
         if (cfg.group_mode == true || cfg.qqchannel_mode == true) {
-            sys.cmdlog("info", "正在启动官方机器人");
+            //sys.cmdlog("info", "正在启动官方机器人");
             await txbot.v2run(); // 运行官方机器人
         }
 

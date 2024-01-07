@@ -15,15 +15,13 @@ const v2run = async () => {
     let lth = 0;
     return new Promise((resolve, reject) => {
         cfg.botlist.forEach(async (v, k) => {
-            sys.cmdlog("info", `[官方机器人-${v.appid}] 正在注册官方机器人：appid ${v.appid}。`);
             gfbot[v.appid] = v;
             await token(v.appid);
             await wssget(v.appid);
-
             await run_timer_token(v.appid);
             await connect_wss(v.appid);
             lth++;
-            sys.cmdlog("info", `[官方机器人-${v.appid}] BOT进度  ${lth} / ${cfg.botlist.length}`);
+            console.log(`[${sys.get_time()}][INFO][腾讯平台BOT-${v.appid}] BOT进度  ${lth} / ${cfg.botlist.length}`);
             if (lth >= cfg.botlist.length) {
                 resolve(true);
             };
@@ -47,13 +45,13 @@ const token = async (appid) => {
                 'Content-Type': 'application/json',
             },
         };
-        sys.cmdlog("info", `[官方机器人-${appid}]正在向腾讯开放平台申请临时token`);
+        //sys.cmdlog("info", `[官方机器人-${appid}]正在向腾讯开放平台申请临时token`);
         const req = https.request(options, (res) => {
             res.on('data', (data) => {
                 data = JSON.parse(data.toString());
                 gfbot[appid].token = data.access_token;
                 gfbot[appid].tokenout = data.expires_in - 50; //可能60概率会被识别错误
-                sys.cmdlog("info", `[官方机器人-${appid}] token获取成功，下次更新token时间 [ ${gfbot[appid].tokenout} ] 秒后`);
+                //sys.cmdlog("info", `[官方机器人-${appid}] token获取成功，下次更新token时间 [ ${gfbot[appid].tokenout} ] 秒后`);
                 resolve(true);
             });
         });
@@ -68,7 +66,7 @@ const token = async (appid) => {
 
 //[官方机器人] 首次定时申请token
 const run_timer_token = (appid) => {
-    sys.cmdlog("info", `[官方机器人-${appid}] token计时器启动`);
+    //sys.cmdlog("info", `[官方机器人-${appid}] token计时器启动`);
     clearTimeout(gfbot[appid].timer_token);
     gfbot[appid].timer_token = setTimeout(async () => {
         await out_timer_token(appid);  //函数未改
@@ -96,7 +94,7 @@ event.on('txbot_connect', async function (appid) {
     };
 
     gfbot[appid].wss.on('open', () => {
-        sys.cmdlog("info", `[官方机器人-${appid}] 腾讯服务器连接成功，正在登录BOT。`);
+        //sys.cmdlog("info", `[官方机器人-${appid}] 腾讯服务器连接成功，正在登录BOT。`);
         sub_msg(appid); //订阅模式
         //发送心跳包
         clearTimeout(gfbot[appid].wss_timer);
@@ -123,11 +121,11 @@ event.on('txbot_connect', async function (appid) {
                 gfbot[appid].s = data.s;
             }
             if (data.op == 7) {
-                console.log("腾讯服务器通知：即将断开ws服务器链接");
+                //console.log("腾讯服务器通知：即将断开ws服务器链接");
                 return;
             }
             if (data.op == 10) {
-                console.log("腾讯服务器通知：正在连接ws服务器");
+                //console.log("腾讯服务器通知：正在连接ws服务器");
                 return;
             }
             if (data.op == 0) {
@@ -274,7 +272,7 @@ const connect_wss = async (appid) => {
     return new Promise((resolve, reject) => {
         event.emit(`txbot_connect`, appid);
         event.once(`txbot_connect_${appid}_end`, async function (appid) {
-            sys.cmdlog("info", `[官方机器人-${appid}] BOT登录成功`);
+            //sys.cmdlog("info", `[官方机器人-${appid}] BOT登录成功`);
             resolve(true);
         });
     });
@@ -603,7 +601,7 @@ const sendmsgat = (d, postData) => {
         };
 
         let reint = 0;
-        console.log(postData);
+        //console.log(postData);
         function run_ax() {
             const req = https.request(options, (res) => {
                 res.on('data', (chunk) => {
@@ -775,7 +773,7 @@ const getme = async () => {
 
 //[官方bot]获取wss服务器
 const wssget = async (appid) => {
-    sys.cmdlog("info", `[官方机器人-${appid}]正在获取官方websock服务器。`);
+    //sys.cmdlog("info", `[官方机器人-${appid}]正在获取官方websock服务器。`);
     return new Promise((resolve, reject) => {
         const postData = JSON.stringify({});
         const options = {
@@ -792,7 +790,7 @@ const wssget = async (appid) => {
             res.on('data', (data) => {
                 data = JSON.parse(data.toString());
                 gfbot[appid].wssurl = data.url;
-                sys.cmdlog("info", `[官方机器人-${appid}]获取官方websock服务器成功：${gfbot[appid].wssurl}`);
+                //sys.cmdlog("info", `[官方机器人-${appid}]获取官方websock服务器成功：${gfbot[appid].wssurl}`);
                 resolve(true);
             });
         });

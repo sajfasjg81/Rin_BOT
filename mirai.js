@@ -85,7 +85,7 @@ event.on('reconnect_mirai', async function (data) {
     };
 
     miraiwss[bot].on('open', () => {
-        sys.cmdlog("info", `[Mirai-${bot}] websock服务器连接成功`);
+        //sys.cmdlog("info", `[Mirai-${bot}] websock服务器连接成功`);
         botrc[bot] = 1;
     });
 
@@ -100,7 +100,7 @@ event.on('reconnect_mirai', async function (data) {
             if (skey == null && data?.data?.session != null) {
                 skey = data.data.session;
                 sekey[bot] = data.data.session;
-                sys.cmdlog("info", `\x1b[36m[Mirai-${bot}] ：已注册skey ${skey}\x1b[0m`);
+                //sys.cmdlog("info", `\x1b[36m[Mirai-${bot}] ：已注册skey ${skey}\x1b[0m`);
             }
 
             if (data?.data?.type == "GroupMessage") {

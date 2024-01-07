@@ -579,7 +579,7 @@ const run = async (ms, msg, type, opdata) => {
     }
 
     if (ms.name == "随机柴郡") {
-        console.log("测试触发");
+        //console.log("测试触发");
         backdata.push({
             bot_type: "imgurl",
             text: `https://api.lolimi.cn/API/chaiq/c.php`,
