@@ -1,4 +1,5 @@
 cfg/cfg.js
 json/*.json
+apijson/*.json
 plugin/maolin_admin
 kaifa/

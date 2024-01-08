@@ -431,7 +431,7 @@ const send_msg_back = (cmdback, data, seq = 1) => {
                         .catch(error => {
                             if (re >= 3) {
                                 console.error(`[${sys.get_time()}][上传失败] msgid ${data.d.id}  `);
-                                sendmsg = sendmsg + `${error} 失败`;
+                                sendmsg = sendmsg + `${error} 失败，远程API故障与BOT无关。`;
                                 console.error(error + "失败");
                                 seq++;
                                 const postData = {

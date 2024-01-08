@@ -70,7 +70,17 @@ const cfg = [
         class: "yule",
         plugin: "img_gl",
         mstype: "local",
+        tips:"随机发送一张柴郡表情包",
         trigger: ["随机柴郡", "柴郡"],
+        off: false,
+    },
+    {
+        name: "随机咖波",
+        class: "yule",
+        plugin: "img_gl",
+        mstype: "local",
+        tips:"随机发送一张咖波表情包",
+        trigger: ["随机咖波", "咖波"],
         off: false,
     },
     {
@@ -78,6 +88,7 @@ const cfg = [
         class: "yule",
         plugin: "img_gl",
         mstype: "local",
+        tips:"随机发送一张龙图表情包（攻击性极高）",
         trigger: ["随机龙图", "龙图"],
         off: false,
     },
@@ -629,7 +640,15 @@ const run = async (ms, msg, type, opdata) => {
         //console.log("测试触发");
         backdata.push({
             bot_type: "imgurl",
-            text: `https://api.lolimi.cn/API/chaiq/c.php`,
+            text: `http://chaijun.avocado.wiki`,
+        });
+        return backdata;
+    }
+    if (ms.name == "随机咖波") {
+        //console.log("测试触发");
+        backdata.push({
+            bot_type: "imgurl",
+            text: `http://hanhan.avocado.wiki?kabo`,
         });
         return backdata;
     }

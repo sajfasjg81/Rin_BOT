@@ -208,7 +208,7 @@ const run = async (ms, msg, type, opdata) => {
         const bfdf = await sys.load_json(`${dir}/json/ba_last_bf.json`)
         backdata.push({
             bot_type: "text",
-            text: `[蔚蓝档案国服总力战底分]`,
+            text: `[蔚蓝档案国服总力战边界]`,
         });
         backdata.push({
             bot_type: "text",
@@ -217,7 +217,7 @@ const run = async (ms, msg, type, opdata) => {
         gfdf.forEach(element => {
             backdata.push({
                 bot_type: "text",
-                text: `\n${element.rank}名：${element.bestRankingPoint}(${element.hard}) `,
+                text: `\n${element.rank}名(${element.hard}) `,
             });
         });
         backdata.push({
@@ -227,7 +227,7 @@ const run = async (ms, msg, type, opdata) => {
         bfdf.forEach(element => {
             backdata.push({
                 bot_type: "text",
-                text: `\n${element.rank}名：${element.bestRankingPoint}(${element.hard})`,
+                text: `\n${element.rank}名(${element.hard})`,
             });
         });
         backdata.push({

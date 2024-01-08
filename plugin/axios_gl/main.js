@@ -456,7 +456,7 @@ const run = async (ms, msg, type, opdata) => {
             bot_type: "text",
             text: `[远程API失败]${error}`,
         });
-        console.error(error);
+        console.error(err);
     }
 }
 
